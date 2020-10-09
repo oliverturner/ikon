@@ -1,20 +1,18 @@
-const postcssPresetEnv  = require('postcss-preset-env')
-const postcssImport     = require('postcss-import')
-const postcsseasings    = require('postcss-easings')
-const importUrl         = require('postcss-import-url')
+const postcssPresetEnv = require("postcss-preset-env");
+const postcssImport = require("postcss-import");
+const postcssEasings = require("postcss-easings");
+const importUrl = require("postcss-import-url");
 
 module.exports = {
   plugins: [
     importUrl(),
     postcssImport({
-      path: 'app/css',
+      path: "app/css",
     }),
-    postcsseasings(),
+    // postcssEasings(),
+    // postcssEasings.easings,
     postcssPresetEnv({
       stage: 0,
-      browsers: [
-        'defaults',
-      ],
     }),
-  ]
-}
+  ],
+};
