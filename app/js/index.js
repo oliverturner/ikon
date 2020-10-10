@@ -1,3 +1,5 @@
+import { getText } from "./utils";
+
 const dropzone = document.querySelector("[data-component=dropzone]");
 const rootContainer = document.querySelector("[data-component=container]");
 
@@ -18,16 +20,22 @@ async function* getEntriesAsAsyncIterator(dirEntry) {
   } while (entries.length > 0);
 }
 
-async function show(entry, acc) {
+async function scanEntries(entry, acc) {
   if (!entry) return acc;
 
-  acc[entry.name] = entry;
+  const key = entry.name
+
+  acc[key] = { entry };
 
   if (entry.isDirectory) {
-    acc[entry.name] = { entry, files: {} };
+    acc[key].files = {};
     for await (const e of getEntriesAsAsyncIterator(entry)) {
-      await show(e, acc[entry.name].files);
+      await scanEntries(e, acc[key].files);
     }
+  }
+
+  if (entry.isFile) {
+    acc[key].contents = await getText(entry);
   }
 
   return acc;
@@ -51,7 +59,7 @@ async function onDrop(event) {
   const data = {};
   for (let item of event.dataTransfer.items) {
     const entry = item.webkitGetAsEntry();
-    await show(entry, data);
+    await scanEntries(entry, data);
   }
 
   console.log(data);
