@@ -51,12 +51,13 @@ async function scanEntries(entry, acc) {
     }
 
     if (utils.isFile(entry)) {
-      const fileType = await utils.getType(entry);
+      // const fileType = await utils.getType(entry);
 
-      if (fileType === "image/svg+xml") {
-        const contents = await utils.getText(entry);
-        acc[entry.name] = { type: "file", entry, contents: String(contents) };
-      }
+      // if (fileType === "image/svg+xml") {
+      //   const contents = await utils.getText(entry);
+      //   acc[entry.name] = { type: "file", entry, contents: String(contents) };
+      // }
+      acc[entry.name] = { type: "file", entry, contents: "<svg>lol</svg>" };
     }
   } catch (error) {
     console.log(error);
