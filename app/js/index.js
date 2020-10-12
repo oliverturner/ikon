@@ -3,14 +3,6 @@ import * as utils from "./utils";
 const dropzone = document.querySelector("[data-component=dropzone]");
 const gallery = document.querySelector("[data-component=container]");
 
-async function* asyncDataTransferIterator(items) {
-  do {
-    for (const item of items) {
-      yield item.webkitGetAsEntry();
-    }
-  } while (items.length > 0);
-}
-
 /**
  * Turn the supplied FileSystemDirectoryEntry into an iterable collection of entries
  *
@@ -41,13 +33,15 @@ async function scanEntries(entry, acc) {
   if (!entry) return acc;
 
   try {
+    const { fullPath, name } = entry;
+
     if (utils.isDirectory(entry)) {
-      /** @type IconRecord */
-      const value = { type: "directory", entry, contents: {} };
+      const contents = {};
       for await (const dirEntry of asyncDirectoryIterator(entry)) {
-        await scanEntries(dirEntry, value.contents);
+        await scanEntries(dirEntry, contents);
       }
-      acc[entry.name] = value;
+
+      acc[entry.name] = { type: "directory", name, fullPath, contents };
     }
 
     if (utils.isFile(entry)) {
@@ -55,7 +49,12 @@ async function scanEntries(entry, acc) {
 
       if (fileType === "image/svg+xml") {
         const contents = await utils.getText(entry);
-        acc[entry.name] = { type: "file", entry, contents: String(contents) };
+        acc[entry.name] = {
+          type: "file",
+          name,
+          fullPath,
+          contents: String(contents),
+        };
       }
     }
   } catch (error) {
@@ -75,7 +74,7 @@ function getHTML(iconRecords, container) {
   // Sort directories first
   const sortedKeys = Object.values(iconRecords)
     .sort(utils.compareRecordTypes)
-    .map((record) => record.entry.name);
+    .map((record) => record.name);
 
   for (const key of sortedKeys) {
     let el;
@@ -106,7 +105,7 @@ function getHTML(iconRecords, container) {
     if (val.type === "file") {
       el = document.createElement("li");
       el.className = "icon";
-      el.setAttribute("data-icon-key", val.entry.name);
+      el.setAttribute("data-icon-key", val.name);
       el.appendChild(utils.createSVG(val.contents));
     }
 
@@ -131,16 +130,18 @@ async function onDrop(event) {
 
   try {
     /** @type {Record<string, IconRecord>} */
-    const data = {};
+    const iconRecords = {};
 
     // Async operations occur outside the original callstack of the event handler
     // Creating a new local record of the transformed items is required
     const files = [...event.dataTransfer.items].map((item) => item.webkitGetAsEntry());
     for (let file of files) {
-      await scanEntries(file, data);
+      await scanEntries(file, iconRecords);
     }
 
-    getHTML(data, gallery);
+    getHTML(iconRecords, gallery);
+
+    console.log(JSON.stringify(iconRecords, null, 2));
   } catch (error) {
     console.log(error);
   }

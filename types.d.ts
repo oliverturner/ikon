@@ -47,10 +47,7 @@ type FileSystemEntry = {
 };
 
 type FileSystemFileEntry = FileSystemEntry & {
-  file: (
-    successCallback: (value: Blob) => void,
-    errorCallback?: (reason?: any) => void
-  ) => File;
+  file: (successCallback: (value: Blob) => void, errorCallback?: (reason?: any) => void) => File;
 };
 
 type FileSystemDirectoryEntry = FileSystemEntry & {
@@ -66,13 +63,15 @@ type FileSystemDirectoryReader = {
 
 type IconDir = {
   type: "directory";
-  entry: FileSystemDirectoryEntry;
+  fullPath: string;
+  name: string;
   contents: Record<string, IconRecord>;
 };
 
 type IconFile = {
   type: "file";
-  entry: FileSystemFileEntry;
+  fullPath: string;
+  name: string;
   contents: string;
 };
 
