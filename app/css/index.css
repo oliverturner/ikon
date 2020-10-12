@@ -47,16 +47,7 @@ ul {
   content: "drop files and folders here";
 }
 
-.container {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.dir {
-  grid-column: 1 / -1;
-}
-
-.dir__contents {
+.icongrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, 24px);
   gap: 1rem;
@@ -64,6 +55,13 @@ ul {
   padding: 1rem;
   border: 1px solid var(--dir-border);
   border-radius: var(--border-radius);
+}
+
+.dir {
+  grid-column: 1 / -1;
+}
+
+.dir__contents {
   border-top-left-radius: 0;
 }
 

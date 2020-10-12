@@ -51,13 +51,12 @@ async function scanEntries(entry, acc) {
     }
 
     if (utils.isFile(entry)) {
-      // const fileType = await utils.getType(entry);
+      const fileType = await utils.getType(entry);
 
-      // if (fileType === "image/svg+xml") {
-      //   const contents = await utils.getText(entry);
-      //   acc[entry.name] = { type: "file", entry, contents: String(contents) };
-      // }
-      acc[entry.name] = { type: "file", entry, contents: "<svg>lol</svg>" };
+      if (fileType === "image/svg+xml") {
+        const contents = await utils.getText(entry);
+        acc[entry.name] = { type: "file", entry, contents: String(contents) };
+      }
     }
   } catch (error) {
     console.log(error);
@@ -83,7 +82,7 @@ function getHTML(data, container) {
       label.className = "dir__label";
 
       const subcontainer = document.createElement("ul");
-      subcontainer.className = "dir__contents";
+      subcontainer.className = "dir__contents icongrid";
 
       const contents = document.createElement("li");
       contents.appendChild(subcontainer);
@@ -125,13 +124,13 @@ async function onDrop(event) {
   try {
     /** @type {Record<string, IconRecord>} */
     const data = {};
-    for (let item of event.dataTransfer.items) {
-      await scanEntries(item.webkitGetAsEntry(), data);
-    }
 
-    // for await (const item of asyncDataTransferIterator(event.dataTransfer.items)) {
-    //   await scanEntries(item, data);
-    // }
+    // Async operations occur outside the original callstack of the event handler
+    // Creating a new local record of the transformed items is required
+    const files = [...event.dataTransfer.items].map(item => item.webkitGetAsEntry());
+    for (let file of files) {
+      await scanEntries(file, data);
+    }
 
     getHTML(data, gallery);
   } catch (error) {
