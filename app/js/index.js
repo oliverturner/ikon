@@ -66,41 +66,47 @@ async function scanEntries(entry, acc) {
 }
 
 /**
+ * Generate the HTML
  *
- * @param {Record<string, IconRecord>} data
+ * @param {Record<string, IconRecord>} iconRecords
  * @param {Element} container
  */
-function getHTML(data, container) {
-  for (const [key, val] of Object.entries(data)) {
+function getHTML(iconRecords, container) {
+  // Sort directories first
+  const sortedKeys = Object.values(iconRecords)
+    .sort(utils.compareRecordTypes)
+    .map((record) => record.entry.name);
+
+  for (const key of sortedKeys) {
     let el;
+    const val = iconRecords[key];
+
     if (val.type === "directory") {
-      // TODO: don't render empty directories
-      // if(Object.keys(val.files).length === 0) return;
+      // Skip rendering empty directories
+      if (Object.keys(val.contents).length === 0) continue;
 
-      const label = document.createElement("li");
-      label.textContent = key;
-      label.className = "dir__label";
+      const subContainer = document.createElement("ul");
+      subContainer.className = "dir__contents icongrid";
 
-      const subcontainer = document.createElement("ul");
-      subcontainer.className = "dir__contents icongrid";
+      const dirContents = document.createElement("li");
+      dirContents.appendChild(subContainer);
 
-      const contents = document.createElement("li");
-      contents.appendChild(subcontainer);
+      const dirLabel = document.createElement("li");
+      dirLabel.textContent = key;
+      dirLabel.className = "dir__label";
 
       el = document.createElement("ul");
       el.className = "dir";
-      el.appendChild(label);
-      el.appendChild(contents);
+      el.appendChild(dirLabel);
+      el.appendChild(dirContents);
 
-      getHTML(val.contents, subcontainer);
+      getHTML(val.contents, subContainer);
     }
 
     if (val.type === "file") {
-      const label = document.createElement("p");
-      label.textContent = key;
-
       el = document.createElement("li");
       el.className = "icon";
+      el.setAttribute("data-icon-key", val.entry.name);
       el.appendChild(utils.createSVG(val.contents));
     }
 
@@ -108,6 +114,8 @@ function getHTML(data, container) {
   }
 }
 
+// Drag handlers
+//-----------------------------------------------------------------------------
 /**
  * @param {DragEvent} event
  */
@@ -127,7 +135,7 @@ async function onDrop(event) {
 
     // Async operations occur outside the original callstack of the event handler
     // Creating a new local record of the transformed items is required
-    const files = [...event.dataTransfer.items].map(item => item.webkitGetAsEntry());
+    const files = [...event.dataTransfer.items].map((item) => item.webkitGetAsEntry());
     for (let file of files) {
       await scanEntries(file, data);
     }

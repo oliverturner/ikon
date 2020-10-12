@@ -34,6 +34,18 @@ export function createSVG(svgString) {
   return fragment.querySelector('svg');
 }
 
+/**
+ * Sort directories first
+ *
+ * @param {IconRecord} a
+ * @param {IconRecord} b
+ */
+export function compareRecordTypes(a, b) {
+  if (a.type < b.type) return -1;
+  if (a.type > b.type) return 1;
+  return 0;
+}
+
 // Type guards
 //--------------------------------------------------------------------------------------------------
 /**
