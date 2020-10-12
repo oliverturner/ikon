@@ -1,3 +1,7 @@
+/**
+ * @param {FileSystemFileEntry} entry
+ * @returns {Promise<string | ArrayBuffer>}
+ */
 export function getText(entry) {
   return new Promise(function (resolve, reject) {
     entry.file(function (file) {
@@ -9,17 +13,41 @@ export function getText(entry) {
   });
 }
 
-export function getImg(entry) {
+/**
+ * @param {FileSystemFileEntry} entry
+ * @returns {Promise<string>}
+ */
+export function getType(entry) {
   return new Promise(function (resolve, reject) {
     entry.file(function (file) {
-      console.log({ file }, file.type.startsWith("image"));
-
-      const url = URL.createObjectURL(file);
-      const img = new Image();
-      img.onload = () => URL.revokeObjectURL(url);
-      img.onerror = reject;
-      img.src = url;
-      resolve(img);
+      resolve(file.type);
     }, reject);
   });
+}
+
+/**
+ * @param {string} svgString
+ */
+export function createSVG(svgString) {
+  const fragment = document.createElement("div");
+  fragment.innerHTML = svgString;
+  return fragment.querySelector('svg');
+}
+
+// Type guards
+//--------------------------------------------------------------------------------------------------
+/**
+ * @param {FileSystemEntry} entry 
+ * @returns {entry is FileSystemDirectoryEntry}
+ */
+export function isDirectory(entry) {
+  return entry.isDirectory;
+}
+
+/**
+ * @param {FileSystemEntry} entry 
+ * @returns {entry is FileSystemFileEntry}
+ */
+export function isFile(entry) {
+  return entry.isFile;
 }
