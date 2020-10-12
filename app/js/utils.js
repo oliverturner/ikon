@@ -31,7 +31,7 @@ export function getType(entry) {
 export function createSVG(svgString) {
   const fragment = document.createElement("div");
   fragment.innerHTML = svgString;
-  return fragment.querySelector('svg');
+  return fragment.querySelector("svg");
 }
 
 /**
@@ -49,7 +49,7 @@ export function compareRecordTypes(a, b) {
 // Type guards
 //--------------------------------------------------------------------------------------------------
 /**
- * @param {FileSystemEntry} entry 
+ * @param {FileSystemEntry} entry
  * @returns {entry is FileSystemDirectoryEntry}
  */
 export function isDirectory(entry) {
@@ -57,7 +57,7 @@ export function isDirectory(entry) {
 }
 
 /**
- * @param {FileSystemEntry} entry 
+ * @param {FileSystemEntry} entry
  * @returns {entry is FileSystemFileEntry}
  */
 export function isFile(entry) {
