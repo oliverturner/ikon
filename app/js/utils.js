@@ -26,15 +26,6 @@ export function getType(entry) {
 }
 
 /**
- * @param {string} svgString
- */
-export function createSVG(svgString) {
-  const fragment = document.createElement("div");
-  fragment.innerHTML = svgString;
-  return fragment.querySelector("svg");
-}
-
-/**
  * Sort directories first
  *
  * @param {IconRecord} a
