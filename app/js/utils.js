@@ -26,6 +26,26 @@ export function getType(entry) {
 }
 
 /**
+ * Sort by supplied key
+ * To sort by directory use "type"
+ *
+ * @param {keyof IconRecord} key
+ */
+export function sortByRecordKey(key) {
+  /**
+   * @param {IconRecord} a 
+   * @param {IconRecord} b 
+   */
+  function compareRecords(a, b) {
+    if (a[key] < b[key]) return -1;
+    if (a[key] > b[key]) return 1;
+    return 0;
+  }
+
+  return compareRecords;
+}
+
+/**
  * Sort directories first
  *
  * @param {IconRecord} a

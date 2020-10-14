@@ -24,21 +24,21 @@ async function* asyncDirectoryIterator(dirEntry) {
 
 /**
  * @param {FileSystemEntry} entry
- * @param {Record<string, IconRecord>} acc
+ * @param {IconRecord[]} arr
  */
-export async function scanEntries(entry, acc) {
-  if (!entry) return acc;
+export async function scanEntries(entry, arr) {
+  if (!entry) return arr;
 
   try {
     const { fullPath, name } = entry;
 
     if (utils.isDirectory(entry)) {
-      const contents = {};
+      const contents = [];
       for await (const dirEntry of asyncDirectoryIterator(entry)) {
         await scanEntries(dirEntry, contents);
       }
 
-      acc[entry.name] = { type: "directory", name, fullPath, contents };
+      arr.push({ type: "directory", name, fullPath, contents });
     }
 
     if (utils.isFile(entry)) {
@@ -46,17 +46,17 @@ export async function scanEntries(entry, acc) {
 
       if (fileType === "image/svg+xml") {
         const contents = await utils.getText(entry);
-        acc[entry.name] = {
+        arr.push({
           type: "file",
           name,
           fullPath,
           contents: String(contents),
-        };
+        });
       }
     }
   } catch (error) {
     console.log(error);
   }
 
-  return acc;
+  return arr;
 }

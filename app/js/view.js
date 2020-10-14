@@ -12,22 +12,20 @@ export function createSVG(svgString) {
 /**
  * Generate the HTML
  *
- * @param {Record<string, IconRecord>} iconRecords
+ * @param {IconRecord[]} iconRecords
  * @param {Element} container
  */
 export function getHTML(iconRecords, container) {
-  // Sort directories first
-  const sortedKeys = Object.values(iconRecords)
-    .sort(utils.compareRecordTypes)
-    .map((record) => record.name);
+  // Sort alphabetically by name, then directories first
+  iconRecords.sort(utils.sortByRecordKey("name"));
+  iconRecords.sort(utils.sortByRecordKey("type"));
 
-  for (const key of sortedKeys) {
+  for (const record of iconRecords) {
     let el;
-    const val = iconRecords[key];
 
-    if (val.type === "directory") {
+    if (record.type === "directory") {
       // Skip rendering empty directories
-      if (Object.keys(val.contents).length === 0) continue;
+      if (record.contents.length === 0) continue;
 
       const subContainer = document.createElement("ul");
       subContainer.className = "dir__contents icongrid";
@@ -36,7 +34,7 @@ export function getHTML(iconRecords, container) {
       dirContents.appendChild(subContainer);
 
       const dirLabel = document.createElement("li");
-      dirLabel.textContent = key;
+      dirLabel.textContent = record.name;
       dirLabel.className = "dir__label";
 
       el = document.createElement("ul");
@@ -44,14 +42,14 @@ export function getHTML(iconRecords, container) {
       el.appendChild(dirLabel);
       el.appendChild(dirContents);
 
-      getHTML(val.contents, subContainer);
+      getHTML(record.contents, subContainer);
     }
 
-    if (val.type === "file") {
+    if (record.type === "file") {
       el = document.createElement("li");
       el.className = "icon";
-      el.setAttribute("data-icon-key", val.name);
-      el.appendChild(createSVG(val.contents));
+      el.setAttribute("data-icon-key", record.name);
+      el.appendChild(createSVG(record.contents));
     }
 
     container.appendChild(el);
