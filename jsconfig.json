@@ -1,0 +1,1 @@
+// Even an empty config seems to trick VS Code into recognising custom types in types.d.ts
