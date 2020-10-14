@@ -1,8 +1,8 @@
 import { scanEntries } from "./data";
 import { getHTML } from "./view";
 
-const dropzone = document.querySelector("[data-component=dropzone]");
-const gallery = document.querySelector("[data-component=container]");
+const dropzoneEl = document.querySelector("[data-component=dropzone]");
+const galleryEl = document.querySelector("[data-component=container]");
 
 // Drag handlers
 //-----------------------------------------------------------------------------
@@ -32,13 +32,11 @@ async function onDrop(event) {
       await scanEntries(file, iconRecords);
     }
 
-    getHTML(iconRecords, gallery);
-
-    console.log(JSON.stringify(iconRecords, null, 2));
+    getHTML(iconRecords, galleryEl);
   } catch (error) {
     console.log(error);
   }
 }
 
-dropzone.addEventListener("dragover", onDragOver, false);
-dropzone.addEventListener("drop", onDrop, false);
+dropzoneEl.addEventListener("dragover", onDragOver, false);
+dropzoneEl.addEventListener("drop", onDrop, false);
