@@ -25,8 +25,8 @@ async function onDrop(event) {
     /** @type {FileSystemEntry[]} */
     const files = [...event.dataTransfer.items].map((item) => item.webkitGetAsEntry());
 
-    /** @type {Record<string, IconRecord>} */
-    const iconRecords = {};
+    /** @type {IconRecord[]} */
+    const iconRecords = [];
 
     for (let file of files) {
       await scanEntries(file, iconRecords);

@@ -65,7 +65,7 @@ type IconDir = {
   type: "directory";
   fullPath: string;
   name: string;
-  contents: Record<string, IconRecord>;
+  contents: IconRecord[];
 };
 
 type IconFile = {
