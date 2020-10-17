@@ -1,7 +1,8 @@
 import * as utils from "./utils";
 
 /**
- * Turn the supplied FileSystemDirectoryEntry into an asynchronously iterable collection of entries
+ * Turn the supplied FileSystemDirectoryEntry into an asynchronously 
+ * iterable collection of entries
  *
  * @param { FileSystemDirectoryEntry } dirEntry
  */
