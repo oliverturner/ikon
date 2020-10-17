@@ -1,6 +1,6 @@
 <script>
-  import Directory from "./directory";
-  import Icon from "./icon";
+  import Directory from "./directory.svelte";
+  import Icon from "./icon.svelte";
 
   /** @type IconRecord */
   export let iconRecord = {};
