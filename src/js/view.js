@@ -34,7 +34,7 @@ export function getHTML(iconRecords, container) {
       dirContents.appendChild(subContainer);
 
       const dirLabel = document.createElement("li");
-      dirLabel.textContent = record.name;
+      dirLabel.innerHTML = `${record.name}: <small>${record.contents.length}</small>`;
       dirLabel.className = "dir__label";
 
       el = document.createElement("ul");
