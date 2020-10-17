@@ -1,6 +1,6 @@
 <script>
-  import Loader from "./loader.svelte";
-  import Record from "./record.svelte";
+  import Loader from "../loader.svelte";
+  import Record from "../record.svelte";
 
   /** @type IconRecord[] */
   export let iconRecords = [];

@@ -1,6 +1,6 @@
 <script>
-  import Dropzone from "./dropzone.svelte";
-  import Gallery from "./gallery.svelte";
+  import Dropzone from "./components/dropzone";
+  import Gallery from "./components/gallery";
   import { scanDroppedItems } from "../js/data";
 
   /** @type {IconRecord[]} */

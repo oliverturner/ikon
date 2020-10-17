@@ -1,6 +1,6 @@
 <script>
   import * as utils from "../js/utils";
-  import Record from "./record.svelte";
+  import Record from "./record";
 
   /** type IconDir */
   export let iconDir = {
