@@ -1,45 +1,78 @@
-import resolve from 'rollup-plugin-node-resolve'
-import postcss from 'rollup-plugin-postcss'
-import { terser } from 'rollup-plugin-terser'
-import { default as importHTTP } from 'import-http/rollup'
+import resolve from "rollup-plugin-node-resolve";
+// import postcss from "rollup-plugin-postcss";
+// import { default as importHTTP } from "import-http/rollup";
 
-const isProd = process.env.NODE_ENV === 'production'
+import svelte from "rollup-plugin-svelte";
+import commonjs from "@rollup/plugin-commonjs";
+import livereload from "rollup-plugin-livereload";
+import { terser } from "rollup-plugin-terser";
 
-const devConfig = {
-  input: 'app/js/index.js',
+const production = !process.env.ROLLUP_WATCH;
+
+function serve() {
+  let server;
+
+  function toExit() {
+    if (server) server.kill(0);
+  }
+
+  return {
+    writeBundle() {
+      if (server) return;
+      server = require("child_process").spawn("npm", ["run", "start", "--", "--dev"], {
+        stdio: ["ignore", "inherit", "inherit"],
+        shell: true,
+      });
+
+      process.on("SIGTERM", toExit);
+      process.on("exit", toExit);
+    },
+  };
+}
+
+export default {
+  input: "app/js/index.js",
   output: {
-    file: 'app/bundle.js',
-    format: 'esm',
-    sourcemap: 'inline',
+    sourcemap: true,
+    format: "iife",
+    name: "app",
+    file: "public/build/bundle.js",
   },
   plugins: [
-    resolve(),
-    importHTTP(),
-    postcss({
-      inject:  false,
+    svelte({
+      // enable run-time checks when not in production
+      dev: !production,
+      // we'll extract any component CSS out into
+      // a separate file - better for performance
+      css: (css) => {
+        css.write("bundle.css");
+      },
     }),
+
+    // If you have external dependencies installed from
+    // npm, you'll most likely need these plugins. In
+    // some cases you'll need additional configuration -
+    // consult the documentation for details:
+    // https://github.com/rollup/plugins/tree/master/packages/commonjs
+    resolve({
+      browser: true,
+      dedupe: ["svelte"],
+    }),
+    commonjs(),
+
+    // In dev mode, call `npm run start` once
+    // the bundle has been generated
+    !production && serve(),
+
+    // Watch the `public` directory and refresh the
+    // browser on changes when not in production
+    !production && livereload("public"),
+
+    // If we're building for production (npm run build
+    // instead of npm run dev), minify
+    production && terser(),
   ],
   watch: {
-    exclude: ['node_modules/**'],
-  }
-}
-
-const prodConfig = {
-  input: 'app/js/index.js',
-  output: {
-    file: 'dist/bundle.js',
-    format: 'esm',
-    sourcemap: true,
+    clearScreen: false,
   },
-  plugins: [
-    resolve(),
-    importHTTP(),
-    postcss({
-      extract: true,
-      minimize: { preset: 'default' },
-    }),
-    terser(),
-  ]
-}
-
-export default isProd ? prodConfig : devConfig
+};

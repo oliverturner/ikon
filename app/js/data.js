@@ -60,3 +60,21 @@ export async function scanEntries(entry, arr) {
 
   return arr;
 }
+
+/**
+ * @param {DataTransferItemList} items
+ * @returns {Promise<IconRecord[]>}
+ */
+export async function scanDroppedItems(items) {
+  // Async operations occur outside the scope of the event handler, so creating a new local record
+  // of the dataTransfer items is required...
+  /** @type {FileSystemEntry[]} */
+  const files = items.map((item) => item.webkitGetAsEntry());
+
+  let scannedEntries = [];
+  for (let file of files) {
+    await scanEntries(file, scannedEntries);
+  }
+
+  return scannedEntries;
+}
