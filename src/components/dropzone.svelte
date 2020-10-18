@@ -16,12 +16,12 @@
 
     text-align: center;
     height: 100px;
-    border: 4px dashed currentColor;
     border-radius: 10px;
-    color: red;
+    color: #333;
+    background-color: #999;
   }
 </style>
 
 <div class="dropzone" on:dragover={onDragOver} on:drop={onDrop}>
-  Drop folders and individual SVGs here
+  Drop folders and SVGs here
 </div>
