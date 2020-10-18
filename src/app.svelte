@@ -5,9 +5,8 @@
 
   /** @type {IconRecord[]} */
   let iconRecords = [];
+  let fileDict = new Map();
   let showSpinner = false;
-
-  // $: console.log(`the count is ${iconRecords.length}`);
 
   /**
    * @param {DragEvent} event
@@ -15,20 +14,25 @@
   async function onDrop(event) {
     event.preventDefault();
 
+    iconRecords = [];
+    fileDict = new Map();
     showSpinner = true;
 
     try {
-      iconRecords = await scanDroppedItems([...event.dataTransfer.items]);
+      [iconRecords, fileDict] = await scanDroppedItems([...event.dataTransfer.items]);
       showSpinner = false;
     } catch (error) {
       console.log(error);
     }
   }
 
+  /**
+   * @param {MouseEvent} event
+   */
   function onIconClick(event) {
     const item = event.target.closest("li");
     if (item) {
-      console.log(item.dataset.iconKey);
+      console.log("record", fileDict.get(item.dataset.iconKey));
     }
   }
 </script>

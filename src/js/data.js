@@ -29,10 +29,10 @@ async function* asyncDirectoryIterator(dirEntry) {
  * @param {Map} fileDict
  */
 export async function scanEntries(entry, scannedEntries, fileDict) {
-  if (!entry) return scannedEntries;
+  if (!entry) return;
 
   try {
-    const { id, fullPath, name } = entry;
+    const { fullPath, name } = entry;
 
     if (utils.isDirectory(entry)) {
       const contents = [];
@@ -52,11 +52,9 @@ export async function scanEntries(entry, scannedEntries, fileDict) {
           type: "file",
           name,
           fullPath,
-          contents: contents,
+          contents,
         };
         scannedEntries.push(record);
-
-        console.log({ id });
         fileDict.set(fullPath, record);
       }
     }
@@ -73,12 +71,12 @@ export async function scanDroppedItems(items) {
   // Async operations occur outside the scope of the event handler, so creating a new local record
   // of the dataTransfer items is required...
   /** @type {FileSystemEntry[]} */
-  const files = items.map((item) => item.webkitGetAsEntry());
+  const entries = items.map((item) => item.webkitGetAsEntry());
 
   let scannedEntries = [];
   let fileDict = new Map();
-  for (let file of files) {
-    await scanEntries(file, scannedEntries, fileDict);
+  for (let entry of entries) {
+    await scanEntries(entry, scannedEntries, fileDict);
   }
 
   return [scannedEntries, fileDict];
