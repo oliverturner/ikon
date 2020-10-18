@@ -3,4 +3,4 @@
   export let iconFile;
 </script>
 
-<li class="icon" data-icon-key={iconFile.name}>{@html iconFile.contents}</li>
+<li class="icon" data-icon-key={iconFile.fullPath}>{@html iconFile.contents}</li>
