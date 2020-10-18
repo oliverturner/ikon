@@ -1,7 +1,7 @@
 import * as utils from "./utils";
 
 /**
- * Turn the supplied FileSystemDirectoryEntry into an asynchronously 
+ * Turn the supplied FileSystemDirectoryEntry into an asynchronously
  * iterable collection of entries
  *
  * @param { FileSystemDirectoryEntry } dirEntry
@@ -25,41 +25,44 @@ async function* asyncDirectoryIterator(dirEntry) {
 
 /**
  * @param {FileSystemEntry} entry
- * @param {IconRecord[]} arr
+ * @param {IconRecord[]} scannedEntries
+ * @param {Map} fileDict
  */
-export async function scanEntries(entry, arr) {
-  if (!entry) return arr;
+export async function scanEntries(entry, scannedEntries, fileDict) {
+  if (!entry) return scannedEntries;
 
   try {
-    const { fullPath, name } = entry;
+    const { id, fullPath, name } = entry;
 
     if (utils.isDirectory(entry)) {
       const contents = [];
       for await (const dirEntry of asyncDirectoryIterator(entry)) {
-        await scanEntries(dirEntry, contents);
+        await scanEntries(dirEntry, contents, fileDict);
       }
 
-      arr.push({ type: "directory", name, fullPath, contents });
+      scannedEntries.push({ type: "directory", name, fullPath, contents });
     }
 
     if (utils.isFile(entry)) {
       const fileType = await utils.getType(entry);
 
       if (fileType === "image/svg+xml") {
-        const contents = await utils.getText(entry);
-        arr.push({
+        const contents = String(await utils.getText(entry));
+        const record = {
           type: "file",
           name,
           fullPath,
-          contents: String(contents),
-        });
+          contents: contents,
+        };
+        scannedEntries.push(record);
+
+        console.log({ id });
+        fileDict.set(fullPath, record);
       }
     }
   } catch (error) {
     console.log(error);
   }
-
-  return arr;
 }
 
 /**
@@ -73,9 +76,10 @@ export async function scanDroppedItems(items) {
   const files = items.map((item) => item.webkitGetAsEntry());
 
   let scannedEntries = [];
+  let fileDict = new Map();
   for (let file of files) {
-    await scanEntries(file, scannedEntries);
+    await scanEntries(file, scannedEntries, fileDict);
   }
 
-  return scannedEntries;
+  return [scannedEntries, fileDict];
 }

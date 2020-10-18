@@ -6,6 +6,8 @@
   export let iconRecords = [];
   export let showSpinner = false;
   export let onIconClick;
+
+  $: console.log(`the count is ${iconRecords.length}`);
 </script>
 
 <style>

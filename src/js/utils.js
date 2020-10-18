@@ -33,8 +33,8 @@ export function getType(entry) {
  */
 export function sortByRecordKey(key) {
   /**
-   * @param {IconRecord} a 
-   * @param {IconRecord} b 
+   * @param {IconRecord} a
+   * @param {IconRecord} b
    */
   function compareRecords(a, b) {
     if (a[key] < b[key]) return -1;
