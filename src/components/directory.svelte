@@ -2,18 +2,25 @@
   import * as utils from "../js/utils";
   import Record from "./record.svelte";
 
-  /** type IconDir */
-  export let iconDir = {
-    contents: [],
-  };
-
+  /**
+   * @param {IconRecord[]} contents
+   * @returns {IconRecord[]}
+   */
   function sortContents(contents) {
+    if (!contents) {
+      return {
+        contents: [],
+      };
+    
+    }
     contents.sort(utils.sortByRecordKey("name"));
     contents.sort(utils.sortByRecordKey("type"));
     return contents;
   }
 
-  let sortedContents = sortContents(iconDir.contents);
+  /** @type IconDir */
+  export let iconDir;
+  let sortedContents = sortContents(iconDir?.contents);
 </script>
 
 <style>

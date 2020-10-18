@@ -1,9 +1,3 @@
-/* @import 'css-from-npm'; */
-/* @import '//css-from-url'; */
-/* CSS powers @ https://preset-env.cssdb.org/features */
-/* also, use any of these! https://easings.net */
-
-
 .app {
   display: grid;
   gap: 0.5rem;

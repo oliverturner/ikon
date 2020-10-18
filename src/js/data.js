@@ -1,7 +1,8 @@
 import * as utils from "./utils";
 
 /**
- * Turn the supplied FileSystemDirectoryEntry into an asynchronously iterable collection of entries
+ * Turn the supplied FileSystemDirectoryEntry into an asynchronously
+ * iterable collection of entries
  *
  * @param { FileSystemDirectoryEntry } dirEntry
  */
@@ -24,10 +25,11 @@ async function* asyncDirectoryIterator(dirEntry) {
 
 /**
  * @param {FileSystemEntry} entry
- * @param {IconRecord[]} arr
+ * @param {IconRecord[]} scannedEntries
+ * @param {Map} fileDict
  */
-export async function scanEntries(entry, arr) {
-  if (!entry) return arr;
+export async function scanEntries(entry, scannedEntries, fileDict) {
+  if (!entry) return;
 
   try {
     const { fullPath, name } = entry;
@@ -35,30 +37,30 @@ export async function scanEntries(entry, arr) {
     if (utils.isDirectory(entry)) {
       const contents = [];
       for await (const dirEntry of asyncDirectoryIterator(entry)) {
-        await scanEntries(dirEntry, contents);
+        await scanEntries(dirEntry, contents, fileDict);
       }
 
-      arr.push({ type: "directory", name, fullPath, contents });
+      scannedEntries.push({ type: "directory", name, fullPath, contents });
     }
 
     if (utils.isFile(entry)) {
       const fileType = await utils.getType(entry);
 
       if (fileType === "image/svg+xml") {
-        const contents = await utils.getText(entry);
-        arr.push({
+        const contents = String(await utils.getText(entry));
+        const record = {
           type: "file",
           name,
           fullPath,
-          contents: String(contents),
-        });
+          contents,
+        };
+        scannedEntries.push(record);
+        fileDict.set(fullPath, record);
       }
     }
   } catch (error) {
     console.log(error);
   }
-
-  return arr;
 }
 
 /**
@@ -69,12 +71,13 @@ export async function scanDroppedItems(items) {
   // Async operations occur outside the scope of the event handler, so creating a new local record
   // of the dataTransfer items is required...
   /** @type {FileSystemEntry[]} */
-  const files = items.map((item) => item.webkitGetAsEntry());
+  const entries = items.map((item) => item.webkitGetAsEntry());
 
   let scannedEntries = [];
-  for (let file of files) {
-    await scanEntries(file, scannedEntries);
+  let fileDict = new Map();
+  for (let entry of entries) {
+    await scanEntries(entry, scannedEntries, fileDict);
   }
 
-  return scannedEntries;
+  return [scannedEntries, fileDict];
 }
