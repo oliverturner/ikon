@@ -7,9 +7,9 @@
 </script>
 
 {#if iconRecord.type === 'directory'}
-  <Directory iconDir={iconRecord} />
+  <Directory {iconRecord} />
 {/if}
 
 {#if iconRecord.type === 'file'}
-  <Icon iconFile={iconRecord} />
+  <Icon {iconRecord} />
 {/if}

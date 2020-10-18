@@ -1,6 +1,8 @@
 <script>
   /** @type IconFile */
-  export let iconFile;
+  export let iconRecord;
 </script>
 
-<li class="icon" data-icon-key={iconFile.fullPath}>{@html iconFile.contents}</li>
+<li class="icon" data-icon-key={iconRecord.fullPath}>
+  {@html iconRecord.contents}
+</li>

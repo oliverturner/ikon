@@ -19,8 +19,9 @@
   }
 
   /** @type IconDir */
-  export let iconDir;
-  let sortedContents = sortContents(iconDir?.contents);
+  export let iconRecord;
+
+  $: sortedContents = sortContents(iconRecord?.contents);
 </script>
 
 <style>
@@ -64,9 +65,9 @@
   }
 </style>
 
-{#if iconDir.contents.length > 0}
+{#if iconRecord.contents.length > 0}
   <ul class="dir">
-    <li class="dir__label">{iconDir.name}: {sortedContents.length}</li>
+    <li class="dir__label">{iconRecord.name}: {sortedContents.length}</li>
     <ul class="dir__contents icongrid">
       {#each sortedContents as iconRecord}
         <Record {iconRecord} />

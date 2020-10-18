@@ -1,30 +1,9 @@
 <script>
   import Dropzone from "./components/dropzone.svelte";
   import Gallery from "./components/gallery.svelte";
-  import { scanDroppedItems } from "./js/data";
-
-  /** @type {IconRecord[]} */
-  let iconRecords = [];
+  
   let fileDict = new Map();
   let showSpinner = false;
-
-  /**
-   * @param {DragEvent} event
-   */
-  async function onDrop(event) {
-    event.preventDefault();
-
-    iconRecords = [];
-    fileDict = new Map();
-    showSpinner = true;
-
-    try {
-      [iconRecords, fileDict] = await scanDroppedItems([...event.dataTransfer.items]);
-      showSpinner = false;
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   /**
    * @param {MouseEvent} event
@@ -49,6 +28,6 @@
 </style>
 
 <main class="app">
-  <Dropzone {onDrop} />
-  <Gallery {iconRecords} {showSpinner} {onIconClick} />
+  <Dropzone />
+  <Gallery {showSpinner} {onIconClick} />
 </main>
