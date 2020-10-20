@@ -1,12 +1,9 @@
 <script>
-  import Loader from "./loader.svelte";
   import Record from "./record.svelte";
-  import { iconRecords } from "../js/stores";
-
-  export let showSpinner = false;
+  export let iconRecords;
   export let onIconClick;
 
-  $: console.log(`the count is ${$iconRecords.length}`);
+  $: console.log(`the count is ${iconRecords?.length}`);
 </script>
 
 <style>
@@ -15,13 +12,9 @@
   }
 </style>
 
-{#if showSpinner}
-  <Loader />
-{/if}
-
-{#if $iconRecords.length > 0}
+{#if iconRecords?.length}
   <ul class="gallery icongrid" on:click={onIconClick}>
-    {#each $iconRecords as iconRecord}
+    {#each iconRecords as iconRecord}
       <Record {iconRecord} />
     {/each}
   </ul>

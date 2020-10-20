@@ -1,23 +1,5 @@
 <script>
-  import { scanDroppedItems } from "../js/data";
-  import * as stores from "../js/stores";
-
-  /**
-   * @param {DragEvent} event
-   */
-  async function onDrop(event) {
-    event.preventDefault();
-
-    stores.iconRecords.set([]);
-
-    try {
-      const [iconRecords, fileDict] = await scanDroppedItems([...event.dataTransfer.items]);
-      stores.iconRecords.set(iconRecords);
-      stores.fileDict.set(fileDict);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  export let onDrop;
 
   /**
    * @param {DragEvent} event

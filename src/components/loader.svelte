@@ -1,12 +1,10 @@
+<script>
+  import { fade } from "svelte/transition";
+</script>
+
 <style>
   .wrapper {
     margin: auto;
-    opacity: 0;
-
-    animation-name: fade-in;
-    animation-duration: 0.5s;
-    animation-delay: 0.5s;
-    animation-fill-mode: forwards;
   }
 
   .loader,
@@ -38,6 +36,6 @@
   }
 </style>
 
-<div class="wrapper">
+<div class="wrapper" in:fade={{ delay: 250 }} >
   <div class="loader">loading...</div>
 </div>

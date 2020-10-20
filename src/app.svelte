@@ -1,9 +1,21 @@
 <script>
   import Dropzone from "./components/dropzone.svelte";
+  import Loader from "./components/loader.svelte";
   import Gallery from "./components/gallery.svelte";
-  
-  let fileDict = new Map();
-  let showSpinner = false;
+  import { scanDroppedItems } from "./js/data";
+
+  let scannedItems = Promise.resolve({
+    iconRecords: [],
+    fileDict: new Map(),
+  });
+
+  /**
+   * @param {DragEvent} event
+   */
+  async function onDrop(event) {
+    event.preventDefault();
+    scannedItems = scanDroppedItems([...event.dataTransfer.items]);
+  }
 
   /**
    * @param {MouseEvent} event
@@ -11,7 +23,7 @@
   function onIconClick(event) {
     const item = event.target.closest("li");
     if (item) {
-      console.log("record", fileDict.get(item.dataset.iconKey));
+      console.log("record", scannedItems.fileDict.get(item.dataset.iconKey));
     }
   }
 </script>
@@ -28,6 +40,13 @@
 </style>
 
 <main class="app">
-  <Dropzone />
-  <Gallery {showSpinner} {onIconClick} />
+  <Dropzone {onDrop} />
+
+  {#await scannedItems}
+    <Loader />
+  {:then { iconRecords }}
+    <Gallery {iconRecords} {onIconClick} />
+  {:catch error}
+    <p>oops... something went awry: {error}</p>
+  {/await}
 </main>

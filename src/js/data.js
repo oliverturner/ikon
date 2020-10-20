@@ -73,11 +73,11 @@ export async function scanDroppedItems(items) {
   /** @type {FileSystemEntry[]} */
   const entries = items.map((item) => item.webkitGetAsEntry());
 
-  let scannedEntries = [];
+  let iconRecords = [];
   let fileDict = new Map();
   for (let entry of entries) {
-    await scanEntries(entry, scannedEntries, fileDict);
+    await scanEntries(entry, iconRecords, fileDict);
   }
 
-  return [scannedEntries, fileDict];
+  return { iconRecords, fileDict };
 }
