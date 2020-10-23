@@ -1,8 +1,12 @@
 <script>
-  import Dropzone from "./components/dropzone.svelte";
+  import { scanDroppedItems } from "../js/data";
+  import Content from "./content.svelte";
+  import Dropzone from "./panels/dropzone.svelte";
+  import Gallery from "./panels/gallery.svelte";
+  import Selection from "./panels/selection.svelte";
   import Loader from "./components/loader.svelte";
-  import Gallery from "./components/gallery.svelte";
-  import { scanDroppedItems } from "./js/data";
+
+  let selectedRecords = [];
 
   let scannedItems = Promise.resolve({
     iconRecords: [],
@@ -34,8 +38,9 @@
     grid-template-rows: auto 1fr;
     gap: 0.5rem;
 
+    overflow: hidden;
     height: 100vh;
-    margin: 0.5rem;
+    padding: 0.5rem;
   }
 </style>
 
@@ -45,7 +50,14 @@
   {#await scannedItems}
     <Loader />
   {:then { iconRecords }}
-    <Gallery {iconRecords} {onIconClick} />
+    <Content>
+      <slot slot="gallery">
+        <Gallery {iconRecords} {onIconClick} />
+      </slot>
+      <slot slot="selection">
+        <Selection {selectedRecords} />
+      </slot>
+    </Content>
   {:catch error}
     <p>oops... something went awry: {error}</p>
   {/await}

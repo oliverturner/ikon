@@ -27,8 +27,8 @@ export function getType(entry) {
 
 /**
  * Sort by supplied key
- * To sort by directory use "type"
- *
+ * 
+ * @example contents.sort(utils.sortByRecordKey("type")); // directories first
  * @param {keyof IconRecord} key
  */
 export function sortByRecordKey(key) {
@@ -45,20 +45,7 @@ export function sortByRecordKey(key) {
   return compareRecords;
 }
 
-/**
- * Sort directories first
- *
- * @param {IconRecord} a
- * @param {IconRecord} b
- */
-export function compareRecordTypes(a, b) {
-  if (a.type < b.type) return -1;
-  if (a.type > b.type) return 1;
-  return 0;
-}
-
-// Type guards
-//--------------------------------------------------------------------------------------------------
+//#region Type guards
 /**
  * @param {FileSystemEntry} entry
  * @returns {entry is FileSystemDirectoryEntry}
@@ -74,3 +61,4 @@ export function isDirectory(entry) {
 export function isFile(entry) {
   return entry.isFile;
 }
+//#endregion

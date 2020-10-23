@@ -1,5 +1,7 @@
 {
+  "types": "build/types.d.ts",
   "scripts": {
+    "prebuild": "tsc -b jsconfig.json",
     "start": "snowpack dev",
     "build": "snowpack build",
     "test": "jest"
@@ -14,9 +16,11 @@
     "@snowpack/plugin-svelte": "3.0.1",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/svelte": "^3.0.0",
+    "@tsconfig/svelte": "1.0.10",
     "jest": "26.6.0",
     "snowpack": "2.15.0",
     "svelte-check": "1.0.60",
-    "svelte-preprocess": "4.5.1"
+    "svelte-preprocess": "4.5.1",
+    "typescript": "4.0.3"
   }
 }

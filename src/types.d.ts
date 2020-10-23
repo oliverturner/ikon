@@ -2,6 +2,7 @@
 // FileSystemEntry: https://developer.mozilla.org/en-US/docs/Web/API/FileSystemEntry
 // FileSystemFileEntry: https://developer.mozilla.org/en-US/docs/Web/API/FileSystemFileEntry
 // FileSystemDirectoryEntry: https://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryEntry
+declare namespace ikon {}
 
 type FileSystem = {
   // A USVString representing the file system's name. This name is unique among the entire list of exposed file systems.

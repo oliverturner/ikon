@@ -1,1 +1,9 @@
-// Even an empty config seems to trick VS Code into recognising custom types in types.d.ts
+{
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  // Change this to match your project
+  "include": ["src/**/*"],
+
+  "compilerOptions": {
+    "noImplicitAny": true,
+  }
+}

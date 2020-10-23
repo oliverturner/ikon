@@ -1,5 +1,5 @@
 <script>
-  import * as utils from "../js/utils";
+  import * as utils from "../../js/utils";
   import Record from "./record.svelte";
 
   /**
