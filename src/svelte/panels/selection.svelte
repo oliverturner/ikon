@@ -1,6 +1,5 @@
 <script>
-  /** @type {IconFile[]} */
-  export let selectedRecords = [];
+  import { selectedIcons } from "../../js/store";
 </script>
 
 <style>
@@ -12,5 +11,5 @@
 
 <div class="selection">
   selected icons shown here
-  {#each selectedRecords as record}{record.name}{/each}
+  {#each $selectedIcons as record}{record.name}{/each}
 </div>

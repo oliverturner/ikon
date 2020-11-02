@@ -1,24 +1,24 @@
 <script>
   import { scanDroppedItems } from "../js/data";
+  import { iconDict } from "../js/store";
   import Content from "./content.svelte";
   import Dropzone from "./panels/dropzone.svelte";
   import Gallery from "./panels/gallery.svelte";
   import Selection from "./panels/selection.svelte";
   import Loader from "./components/loader.svelte";
 
-  let selectedRecords = [];
-
-  let scannedItems = Promise.resolve({
-    iconRecords: [],
-    fileDict: new Map(),
-  });
+  let dropKey = 0;
+  let selectedRecords;
+  let scannedItems = Promise.resolve({ iconRecords: [] });
 
   /**
    * @param {DragEvent} event
    */
   async function onDrop(event) {
     event.preventDefault();
-    scannedItems = scanDroppedItems([...event.dataTransfer.items]);
+
+    scannedItems = await scanDroppedItems([...event.dataTransfer.items]);
+    iconDict.init(scannedItems.fileDict);
   }
 
   /**
@@ -27,7 +27,7 @@
   function onIconClick(event) {
     const item = event.target.closest("li");
     if (item) {
-      console.log("record", scannedItems.fileDict.get(item.dataset.iconKey));
+      iconDict.select(item.dataset.iconKey);
     }
   }
 </script>
@@ -55,7 +55,7 @@
         <Gallery {iconRecords} {onIconClick} />
       </slot>
       <slot slot="selection">
-        <Selection {selectedRecords} />
+        <Selection />
       </slot>
     </Content>
   {:catch error}
