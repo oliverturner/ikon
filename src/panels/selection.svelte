@@ -1,15 +1,18 @@
 <script>
   import { selectedIcons } from "../js/store";
+  import Icon from "../components/icon.svelte";
 </script>
 
 <style>
   .selection {
     overflow-y: auto;
-    background: hotpink;
   }
 </style>
 
 <div class="selection">
-  selected icons shown here
-  {#each $selectedIcons as record}{record.name}{/each}
+  <ul class="icongrid">
+    {#each $selectedIcons as iconRecord}
+      <Icon {iconRecord} />
+    {/each}
+  </ul>
 </div>

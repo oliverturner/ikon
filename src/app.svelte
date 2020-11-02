@@ -1,14 +1,12 @@
 <script>
-  import { scanDroppedItems } from "../js/data";
-  import { iconDict } from "../js/store";
+  import { scanDroppedItems } from "./js/data";
+  import { iconDict } from "./js/store";
   import Content from "./panels/content.svelte";
   import Dropzone from "./panels/dropzone.svelte";
   import Gallery from "./panels/gallery.svelte";
   import Selection from "./panels/selection.svelte";
   import Loader from "./components/loader.svelte";
 
-  let dropKey = 0;
-  let selectedRecords;
   let scannedItems = Promise.resolve({ iconRecords: [] });
 
   /**
@@ -25,9 +23,9 @@
    * @param {MouseEvent} event
    */
   function onIconClick(event) {
-    const item = event.target.closest("li");
+    const item = event.target.closest("[data-key]");
     if (item) {
-      iconDict.select(item.dataset.iconKey);
+      iconDict.select(item.dataset.key);
     }
   }
 </script>

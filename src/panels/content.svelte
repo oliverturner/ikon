@@ -5,7 +5,6 @@
     gap: 1rem;
 
     overflow: hidden;
-    background-color: limegreen;
   }
 </style>
 

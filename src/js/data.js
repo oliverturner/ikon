@@ -40,7 +40,9 @@ export async function scanEntries(entry, scannedEntries, fileDict) {
         await scanEntries(dirEntry, contents, fileDict);
       }
 
-      scannedEntries.push({ type: "directory", name, fullPath, contents });
+      const record = { type: "directory", name, fullPath, contents };
+      scannedEntries.push(record);
+      fileDict.set(fullPath, record);
     }
 
     if (utils.isFile(entry)) {
@@ -48,12 +50,7 @@ export async function scanEntries(entry, scannedEntries, fileDict) {
 
       if (fileType === "image/svg+xml") {
         const contents = String(await utils.getText(entry));
-        const record = {
-          type: "file",
-          name,
-          fullPath,
-          contents,
-        };
+        const record = { type: "file", name, fullPath, contents };
         scannedEntries.push(record);
         fileDict.set(fullPath, record);
       }

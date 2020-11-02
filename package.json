@@ -1,5 +1,5 @@
 {
-  "types": "build/types.d.ts",
+  "types": "src/types.d.ts",
   "scripts": {
     "prebuild": "tsc -b jsconfig.json",
     "start": "snowpack dev",

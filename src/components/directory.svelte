@@ -1,5 +1,5 @@
 <script>
-  import * as utils from "../../js/utils";
+  import * as utils from "../js/utils";
   import Record from "./record.svelte";
 
   /**
@@ -11,7 +11,6 @@
       return {
         contents: [],
       };
-    
     }
     contents.sort(utils.sortByRecordKey("name"));
     contents.sort(utils.sortByRecordKey("type"));
@@ -67,7 +66,10 @@
 
 {#if iconRecord.contents.length > 0}
   <ul class="dir">
-    <li class="dir__label">{iconRecord.name}: {sortedContents.length}</li>
+    <li class="dir__label" data-key={iconRecord.fullPath}>
+      {iconRecord.name}:
+      {sortedContents.length}
+    </li>
     <ul class="dir__contents icongrid">
       {#each sortedContents as iconRecord}
         <Record {iconRecord} />
