@@ -1,5 +1,5 @@
 <script>
-  import { selectedIcons } from "../../js/store";
+  import { selectedIcons } from "../js/store";
 </script>
 
 <style>

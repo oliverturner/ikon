@@ -1,5 +1,5 @@
 <script>
-  import Record from "../components/record.svelte";
+  import Record from "../svelte/components/record.svelte";
   export let iconRecords = [];
   export let onIconClick;
 

@@ -1,7 +1,7 @@
 <script>
   import { scanDroppedItems } from "../js/data";
   import { iconDict } from "../js/store";
-  import Content from "./content.svelte";
+  import Content from "./panels/content.svelte";
   import Dropzone from "./panels/dropzone.svelte";
   import Gallery from "./panels/gallery.svelte";
   import Selection from "./panels/selection.svelte";
@@ -45,7 +45,7 @@
 </style>
 
 <main class="app">
-  <Dropzone {onDrop} />
+  <Dropzone {onDrop} label="Drop folders and SVGs here" />
 
   {#await scannedItems}
     <Loader />
