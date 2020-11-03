@@ -1,5 +1,10 @@
 <script>
+  import { onMount } from "svelte";
   import { fade } from "svelte/transition";
+
+  onMount(() => {
+    console.log("loader mounted!");
+  });
 </script>
 
 <style>
@@ -36,6 +41,6 @@
   }
 </style>
 
-<div class="wrapper" in:fade={{ delay: 250 }} >
+<div class="wrapper" in:fade={{ delay: 250 }}>
   <div class="loader">loading...</div>
 </div>

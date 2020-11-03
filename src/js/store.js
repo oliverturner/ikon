@@ -7,21 +7,18 @@ function createIconDict() {
 
   return {
     subscribe,
-    init: (map) => set(map),
+    set,
     select: (key) =>
       update((map) => {
         const iconRecord = map.get(key);
-        const selected = !iconRecord.selected;
+        iconRecord.selected = !iconRecord.selected;
 
-        // Set the `selected` property regardless of record type
-        map.set(key, { ...iconRecord, selected });
-
-        // If iconRecord is a directory, apply the parent selected value to all children
+        // If a directory, apply `selected` value to all children, regardless of depth
         if (iconRecord.type === "directory") {
-          // Only update relevant records rather than iterating over the entire map
+          // Prefer relevant records to iterating over the entire map
           const childKeys = [...map.keys()].filter((k) => k.startsWith(key));
           for (const childKey of childKeys) {
-            map.set(childKey, { ...map.get(childKey), selected });
+            map.get(childKey).selected = iconRecord.selected;
           }
         }
 
@@ -39,5 +36,6 @@ function getSelectedIcons($iconDict) {
     .sort(utils.sortByRecordKey("fullPath"));
 }
 
+export const iconTree = writable([]);
 export const iconDict = createIconDict();
 export const selectedIcons = derived(iconDict, getSelectedIcons);

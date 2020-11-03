@@ -1,22 +1,29 @@
 <script>
   import { scanDroppedItems } from "./js/data";
-  import { iconDict } from "./js/store";
+  import { iconTree, iconDict } from "./js/store";
   import Content from "./panels/content.svelte";
   import Dropzone from "./panels/dropzone.svelte";
   import Gallery from "./panels/gallery.svelte";
-  import Selection from "./panels/selection.svelte";
+  import Selection from "./panels/selected-icons.svelte";
+  import Spritesheet from "./panels/selected-spritesheet.svelte";
   import Loader from "./components/loader.svelte";
 
-  let scannedItems = Promise.resolve({ iconRecords: [] });
+  let scannedItems;
+
+  function parseDroppedItems(items) {
+    scannedItems = undefined;
+    return scanDroppedItems(items).then(({ iconRecords, fileDict }) => {
+      iconTree.set(iconRecords);
+      iconDict.set(fileDict);
+    });
+  }
 
   /**
    * @param {DragEvent} event
    */
   async function onDrop(event) {
     event.preventDefault();
-
-    scannedItems = await scanDroppedItems([...event.dataTransfer.items]);
-    iconDict.init(scannedItems.fileDict);
+    scannedItems = parseDroppedItems([...event.dataTransfer.items]);
   }
 
   /**
@@ -45,18 +52,23 @@
 <main class="app">
   <Dropzone {onDrop} label="Drop folders and SVGs here" />
 
-  {#await scannedItems}
-    <Loader />
-  {:then { iconRecords }}
-    <Content>
-      <slot slot="gallery">
-        <Gallery {iconRecords} {onIconClick} />
-      </slot>
-      <slot slot="selection">
-        <Selection />
-      </slot>
-    </Content>
-  {:catch error}
-    <p>oops... something went awry: {error}</p>
-  {/await}
+  {#if scannedItems}
+    {#await scannedItems}
+      <Loader />
+    {:then}
+      <Content>
+        <slot slot="gallery">
+          <Gallery {onIconClick} />
+        </slot>
+        <slot slot="selection">
+          <div>
+            <Selection />
+            <Spritesheet />
+          </div>
+        </slot>
+      </Content>
+    {:catch error}
+      <p>oops... something went awry: {error.message}</p>
+    {/await}
+  {/if}
 </main>

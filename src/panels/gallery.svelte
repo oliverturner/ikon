@@ -1,10 +1,8 @@
 <script>
   import Record from "../components/record.svelte";
+  import { iconTree } from "../js/store";
 
-  export let iconRecords = [];
   export let onIconClick;
-
-  $: console.log(`the count is ${iconRecords?.length}`);
 </script>
 
 <style>
@@ -16,7 +14,7 @@
 </style>
 
 <ul class="gallery icongrid" on:click={onIconClick}>
-  {#each iconRecords as iconRecord}
+  {#each $iconTree as iconRecord}
     <Record {iconRecord} />
   {/each}
 </ul>
