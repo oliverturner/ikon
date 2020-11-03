@@ -49,8 +49,9 @@ export async function scanEntries(entry, scannedEntries, fileDict) {
       const fileType = await utils.getType(entry);
 
       if (fileType === "image/svg+xml") {
+        const id = fullPath.split("/").slice(1).join("-");
         const contents = String(await utils.getText(entry));
-        const record = { type: "file", name, fullPath, contents };
+        const record = { type: "file", id, name, fullPath, contents };
         scannedEntries.push(record);
         fileDict.set(fullPath, record);
       }

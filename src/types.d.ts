@@ -64,15 +64,16 @@ type FileSystemDirectoryReader = {
 
 type IconDir = {
   type: "directory";
-  fullPath: string;
   name: string;
+  fullPath: string;
   contents: IconRecord[];
 };
 
 type IconFile = {
   type: "file";
-  fullPath: string;
+  id: string;
   name: string;
+  fullPath: string;
   contents: string;
 };
 

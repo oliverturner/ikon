@@ -1,7 +1,6 @@
 <script>
   import { scanDroppedItems } from "./js/data";
   import { iconTree, iconDict } from "./js/store";
-  import Content from "./panels/content.svelte";
   import Dropzone from "./panels/dropzone.svelte";
   import Gallery from "./panels/gallery.svelte";
   import Selection from "./panels/selected-icons.svelte";
@@ -47,6 +46,29 @@
     height: 100vh;
     padding: 0.5rem;
   }
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "a b"
+      "a c";
+    gap: 1rem;
+
+    overflow: hidden;
+  }
+
+  .a {
+    grid-area: a;
+  }
+  .b {
+    grid-area: b;
+    overflow: hidden;
+  }
+  .c {
+    grid-area: c;
+    overflow: hidden;
+  }
 </style>
 
 <main class="app">
@@ -56,17 +78,17 @@
     {#await scannedItems}
       <Loader />
     {:then}
-      <Content>
-        <slot slot="gallery">
+      <div class="content">
+        <div class="a">
           <Gallery {onIconClick} />
-        </slot>
-        <slot slot="selection">
-          <div>
-            <Selection />
-            <Spritesheet />
-          </div>
-        </slot>
-      </Content>
+        </div>
+        <div class="b">
+          <Selection />
+        </div>
+        <div class="c">
+          <Spritesheet />
+        </div>
+      </div>
     {:catch error}
       <p>oops... something went awry: {error.message}</p>
     {/await}

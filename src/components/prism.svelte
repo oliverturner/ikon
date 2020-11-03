@@ -4,59 +4,28 @@
 
   // Prism Imports
   import "prismjs";
-  import "prismjs/plugins/line-numbers/prism-line-numbers.js";
-  import "prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.js";
 
-  // The code being used
+  import "prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.js";
+  import "prismjs/components/prism-markup.js";
+  import "prismjs/themes/prism.css";
+  import "prismjs/themes/prism-okaidia.css";
+
   export let code = "";
 
-  // link https://prismjs.com/#supported-languages
-  // import from 'prismjs/components/prism-{lanugage-name}.js'
-  // The language being rendered
-  export let language = "markup";
-
-  // link https://prismjs.com/plugins/line-numbers/
-  // Turns on and off line numbers
-  export let showLineNumbers = false;
-
-  // Link https://prismjs.com/plugins/normalize-whitespace/
-  // Turns on and off cleanup plugin
-  export let normalizeWhiteSpace = true;
-
-  // The defualt config for cleanup white space
-  export let normalizeWhiteSpaceConfig = {
-    "remove-trailing": true,
-    "remove-indent": true,
-    "left-trim": true,
-    "right-trim": true,
-    /*'break-lines': 80,
-	'indent': 2,
-	'remove-initial-line-feed': false,
-	'tabs-to-spaces': 4,
-	'spaces-to-tabs': 4*/
-  };
-
-  // CSS Classes specified by the user of the component
-  export let classes = "";
-
-  // This is the fake coding element
   let fakeCodeEl;
-
-  // This is pre Element
   let preEl;
-
-  // This stored the formatted HTML to display
   let formattedCode = "";
-
-  // creates the prism classes
-  $: prismClasses = `language-${language} ${
-    showLineNumbers ? "line-numbers" : ""
-  } ${normalizeWhiteSpace === true ? "" : "no-whitespace-normalization"}`;
+  let language = "markup";
 
   onMount(() => {
-    if (normalizeWhiteSpace) {
-      Prism.plugins.NormalizeWhitespace.setDefaults(normalizeWhiteSpaceConfig);
-    }
+    Prism.plugins.NormalizeWhitespace.setDefaults({
+      "remove-trailing": true,
+      "remove-indent": true,
+      "left-trim": true,
+      "right-trim": true,
+      "break-lines": 80,
+      "tabs-to-spaces": 2,
+    });
   });
 
   afterUpdate(async () => {
@@ -79,12 +48,22 @@
   }
 </script>
 
-<code style="display: none;" bind:this={fakeCodeEl}>
+<style>
+  .dummy-code {
+    display: none;
+  }
+  .codearea {
+    font-size: 0.7rem;
+  }
+</style>
+
+<code class="dummy-code" bind:this={fakeCodeEl}>
   <slot />
 </code>
-<pre class="{prismClasses} {classes}" bind:this={preEl} {...$$restProps}>
+
+<pre class="codearea language-markup" bind:this={preEl}>
   <code
-    class="language-{language}">
+    class="language-markup">
     {@html formattedCode}
   </code>
 </pre>

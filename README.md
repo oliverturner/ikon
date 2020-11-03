@@ -7,8 +7,8 @@ An app for creating icon spritesheets and React components from dragged & droppe
 ## TODOs
 
 ### MVP
-- [ ] Display 
-- [ ] Download constructed spritesheet
+- [ ] Make UI accessible: switch from `ul` to keyboard-friendly alternative
+- [x] Download constructed spritesheet
 - [ ] Cloudflare hosting
 
 ### Perf

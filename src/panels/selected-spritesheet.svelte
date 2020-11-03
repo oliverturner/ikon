@@ -1,43 +1,67 @@
 <script>
   import { selectedIcons } from "../js/store";
-  import Prism from "../components/prism";
-  // import Sprite from "../components/sprite.svelte";
+  import { createSymbol } from "../js/sprite";
 
   const node = document.createElement("div");
 
   /**
-   * @param {IconRecord} icon
+   * 1. Construct an SVG element by injecting the icon's `contents` property
+   *    into the reusable node <div />
+   * 2. Copy the SVG's children and attributes to a new <symbol /> element and
+   *    return its text representation
+   * @param {IconFile} icon
    */
-  function processSVG(icon) {
-    node.innerHTML = icon.contents;
-    const svg = node.querySelector("svg");
-    const viewBox = svg.getAttribute("viewBox");
-    const id = icon.fullPath.split("/").slice(1).join("-");
-
-    const symbol = document.createElement("symbol");
-    symbol.setAttribute("id", id);
-    symbol.setAttribute("viewBox", viewBox);
-
-    for (const childNode of svg.childNodes) {
-      if (childNode.nodeType === Node.ELEMENT_NODE) {
-        symbol.appendChild(childNode.cloneNode(true));
-      }
-    }
-
-    return symbol.outerHTML;
+  function processSVG({ id, contents }) {
+    node.innerHTML = contents;
+    return createSymbol(id, node.querySelector("svg"));
   }
 
-  $: icons = $selectedIcons.map(processSVG).join("");
-  $: code = icons.length > 0 ? `<svg>${icons}</svg>` : "";
+  function createResource(code) {
+    return code
+      ? `data:text/plain;charset=utf-8,${encodeURIComponent(code)}`
+      : undefined;
+  }
+
+  $: icons = $selectedIcons.map(processSVG).join("\n  ");
+  $: code =
+    icons.length > 0 ? `<svg class="spritesheet">\n  ${icons}\n</svg>` : "";
+  $: fileLink = createResource(code);
 </script>
 
 <style>
+  .container {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: 1rem;
+
+    overflow: hidden;
+    max-height: 100%;
+    border: 1px solid var(--dir-border);
+    border-radius: var(--border-radius);
+  }
   .spritesheet {
-    max-width: 100%;
     overflow: auto;
+    max-height: 100%;
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .spritesheet pre {
+    overflow: auto;
+  }
+
+  .controls {
+    padding: 1rem;
   }
 </style>
 
-<div class="spritesheet">
-  <Prism>{code}</Prism>
+<div class="container">
+  <div class="spritesheet">
+    <pre><code>{code}</code></pre>
+  </div>
+  <div class="controls">
+    {#if fileLink}
+      <a href={fileLink} download="spritesheet.svg">Download</a>
+    {/if}
+  </div>
 </div>

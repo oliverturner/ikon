@@ -4,15 +4,14 @@
 </script>
 
 <style>
-  .selection {
+  .icongrid {
+    max-height: 100%;
     overflow-y: auto;
   }
 </style>
 
-<div class="selection">
-  <ul class="icongrid">
-    {#each $selectedIcons as iconRecord}
-      <Icon {iconRecord} />
-    {/each}
-  </ul>
-</div>
+<ul class="icongrid">
+  {#each $selectedIcons as iconRecord}
+    <Icon {iconRecord} />
+  {/each}
+</ul>

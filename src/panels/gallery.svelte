@@ -7,6 +7,7 @@
 
 <style>
   .gallery {
+    min-width: 0;
     max-height: 100%;
     overflow-y: auto;
     background: #ccc;
