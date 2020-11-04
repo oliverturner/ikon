@@ -1,0 +1,77 @@
+<script>
+  import { selectedIcons } from "../js/store";
+  import * as sprite from "../js/sprite";
+
+  let preserveAttrs = true;
+
+  $: icons = $selectedIcons.map(sprite.processSVG(preserveAttrs)).join("");
+  $: code = sprite.extractCode(icons);
+  $: fileLink = sprite.createResource(code);
+</script>
+
+<style>
+  .container {
+    display: grid;
+    grid-template-rows: 1fr auto;
+
+    overflow: hidden;
+    height: 100%;
+    border: 1px solid var(--dir-border);
+    border-radius: var(--border-radius);
+  }
+
+  .code-preview {
+    overflow: auto;
+    max-height: 100%;
+    max-width: 100%;
+    padding: 0 1rem;
+    background: #111;
+    color: #ccc;
+  }
+
+  .code-preview code {
+    overflow: auto;
+    font-size: 10px;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .control {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .embed-svg {
+    display: none;
+  }
+</style>
+
+<div class="container">
+  <div class="code-preview">
+    {#if code}
+      <pre><code>{code}</code></pre>
+    {/if}
+  </div>
+  <div class="controls">
+    {#if fileLink}
+      <div class="control">
+        <input
+          id="preserve-attrs"
+          type="checkbox"
+          bind:checked={preserveAttrs} />
+        <label for="preserve-attrs">Preserve attributes</label>
+      </div>
+      <a class="control" href={fileLink} download="spritesheet.svg">Download</a>
+    {:else}
+      {@html '&nbsp;'}
+    {/if}
+  </div>
+</div>
+
+<div class="embed-svg">
+  {@html code}
+</div>

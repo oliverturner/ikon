@@ -27,9 +27,29 @@ ul {
 .icongrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, 24px);
+  align-content: flex-start;
   gap: 1rem;
 
   padding: 1rem;
   border: 1px solid var(--dir-border);
   border-radius: var(--border-radius);
+}
+
+.controls {
+  border-top: 1px solid var(--dir-border);
+  padding: 1rem;
+}
+
+.iconbtn {
+  all: unset;
+
+  position: relative;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.iconbtn:hover,
+.iconbtn:focus {
+  outline: 1px solid blue;
 }

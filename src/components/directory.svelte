@@ -33,6 +33,7 @@
   }
 
   .dir__label {
+    all: unset;
     position: relative;
     display: inline-block;
     padding: 0.125rem 0.3rem;
@@ -62,18 +63,22 @@
     border-radius: var(--border-radius);
     background-color: var(--surface);
   }
+  .dir__label:hover,
+  .dir__label:focus {
+    color: yellow;
+  }
 </style>
 
 {#if iconRecord.contents.length > 0}
-  <ul class="dir">
-    <li class="dir__label" data-key={iconRecord.fullPath}>
+  <div class="dir">
+    <button class="dir__label" data-key={iconRecord.fullPath}>
       {iconRecord.name}:
       {sortedContents.length}
-    </li>
-    <ul class="dir__contents icongrid">
-      {#each sortedContents as iconRecord}
+    </button>
+    <div class="dir__contents icongrid">
+      {#each sortedContents as iconRecord (`gallery-${iconRecord.id}`)}
         <Record {iconRecord} />
       {/each}
-    </ul>
-  </ul>
+    </div>
+  </div>
 {/if}

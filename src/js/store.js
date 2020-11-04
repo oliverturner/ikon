@@ -28,9 +28,12 @@ function createIconDict() {
   };
 }
 
-function getSelectedIcons($iconDict) {
-  console.log("getSelectedIcons called");
+function getIconList($iconDict) {
+  return [...$iconDict.values()].filter((record) => record.type === "file");
+}
 
+// TODO: Preserve selection order
+function getSelectedIcons($iconDict) {
   return [...$iconDict.values()]
     .filter((iconRecord) => iconRecord.type === "file" && iconRecord.selected)
     .sort(utils.sortByRecordKey("fullPath"));
@@ -38,4 +41,5 @@ function getSelectedIcons($iconDict) {
 
 export const iconTree = writable([]);
 export const iconDict = createIconDict();
+export const iconList = derived(iconDict, getIconList);
 export const selectedIcons = derived(iconDict, getSelectedIcons);

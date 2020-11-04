@@ -3,8 +3,9 @@
   import { iconTree, iconDict } from "./js/store";
   import Dropzone from "./panels/dropzone.svelte";
   import Gallery from "./panels/gallery.svelte";
-  import Selection from "./panels/selected-icons.svelte";
-  import Spritesheet from "./panels/selected-spritesheet.svelte";
+  import Selection from "./panels/selection.svelte";
+  import Spritesheet from "./panels/spritesheet.svelte";
+  import Content from "./components/content.svelte";
   import Loader from "./components/loader.svelte";
 
   let scannedItems;
@@ -46,29 +47,6 @@
     height: 100vh;
     padding: 0.5rem;
   }
-  .content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas:
-      "a b"
-      "a c";
-    gap: 1rem;
-
-    overflow: hidden;
-  }
-
-  .a {
-    grid-area: a;
-  }
-  .b {
-    grid-area: b;
-    overflow: hidden;
-  }
-  .c {
-    grid-area: c;
-    overflow: hidden;
-  }
 </style>
 
 <main class="app">
@@ -78,17 +56,17 @@
     {#await scannedItems}
       <Loader />
     {:then}
-      <div class="content">
-        <div class="a">
+      <Content>
+        <div slot="gallery">
           <Gallery {onIconClick} />
         </div>
-        <div class="b">
-          <Selection />
+        <div slot="selection">
+          <Selection {onIconClick} />
         </div>
-        <div class="c">
+        <div slot="spritesheet">
           <Spritesheet />
         </div>
-      </div>
+      </Content>
     {:catch error}
       <p>oops... something went awry: {error.message}</p>
     {/await}

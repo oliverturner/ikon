@@ -1,21 +1,56 @@
 <script>
   import Record from "../components/record.svelte";
-  import { iconTree } from "../js/store";
+  import Icon from "../components/icon.svelte";
+  import { iconTree, iconList } from "../js/store";
 
   export let onIconClick;
+
+  let preserveDirs = true;
+
+  const getKey = ({ id }) => `gallery-${id}`;
 </script>
 
 <style>
+  .panel {
+    display: grid;
+    grid-template-rows: 1fr auto;
+
+    overflow: hidden;
+    height: 100%;
+    border: 1px solid var(--dir-border);
+    border-radius: var(--border-radius);
+  }
   .gallery {
-    min-width: 0;
-    max-height: 100%;
+    height: 100%;
     overflow-y: auto;
+    border: none;
     background: #ccc;
+  }
+
+  .control {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
   }
 </style>
 
-<ul class="gallery icongrid" on:click={onIconClick}>
-  {#each $iconTree as iconRecord}
-    <Record {iconRecord} />
-  {/each}
-</ul>
+<div class="panel">
+  <ul class="gallery icongrid" on:click={onIconClick}>
+    {#if preserveDirs}
+      {#each $iconTree as iconRecord (getKey(iconRecord))}
+        <Record {iconRecord} />
+      {/each}
+    {:else}
+      {#each $iconList as iconRecord (getKey(iconRecord))}
+        <Icon {iconRecord} />
+      {/each}
+    {/if}
+  </ul>
+
+  <div class="controls">
+    <div class="control">
+      <input id="collapse" type="checkbox" bind:checked={preserveDirs} />
+      <label for="collapse">Preserve directories</label>
+    </div>
+  </div>
+</div>

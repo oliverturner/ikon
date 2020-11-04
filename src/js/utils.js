@@ -13,6 +13,29 @@ export function getText(entry) {
   });
 }
 
+export function getImg(entry) {
+  return new Promise(function (resolve, reject) {
+    entry.file(function (file) {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => URL.revokeObjectURL(url);
+      img.onerror = reject;
+      img.src = url;
+      resolve(img);
+    }, reject);
+  });
+}
+
+/**
+ * Generate a unique id to be referenced from the embedded SVG
+ * Replace slashes in the path with hyphens, omit the extension
+ * 
+ * @param {string} path
+ */
+export function getIconId(path) {
+  return "icon-" + path.split("/").slice(1).join("-").split(".").slice(0, -1);
+}
+
 /**
  * @param {FileSystemFileEntry} entry
  * @returns {Promise<string>}
@@ -27,7 +50,7 @@ export function getType(entry) {
 
 /**
  * Sort by supplied key
- * 
+ *
  * @example contents.sort(utils.sortByRecordKey("type")); // directories first
  * @param {keyof IconRecord} key
  */
