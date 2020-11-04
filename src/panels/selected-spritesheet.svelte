@@ -1,8 +1,15 @@
 <script>
+  import prettier from "prettier/standalone";
+  import parserHTML from "prettier/parser-html";
+
   import { selectedIcons } from "../js/store";
   import { createSymbol } from "../js/sprite";
 
   const node = document.createElement("div");
+  const prettierConfig = {
+    parser: "html",
+    plugins: [parserHTML],
+  };
 
   /**
    * 1. Construct an SVG element by injecting the icon's `contents` property
@@ -16,6 +23,15 @@
     return createSymbol(id, node.querySelector("svg"));
   }
 
+  function extractCode(icons) {
+    return icons.length > 0
+      ? prettier.format(
+          `<svg class="spritesheet">${icons}</svg>`,
+          prettierConfig
+        )
+      : undefined;
+  }
+
   function createResource(code) {
     return code
       ? `data:text/plain;charset=utf-8,${encodeURIComponent(code)}`
@@ -23,8 +39,7 @@
   }
 
   $: icons = $selectedIcons.map(processSVG).join("\n  ");
-  $: code =
-    icons.length > 0 ? `<svg class="spritesheet">\n  ${icons}\n</svg>` : "";
+  $: code = extractCode(icons);
   $: fileLink = createResource(code);
 </script>
 
@@ -32,36 +47,48 @@
   .container {
     display: grid;
     grid-template-rows: 1fr auto;
-    gap: 1rem;
 
     overflow: hidden;
     max-height: 100%;
     border: 1px solid var(--dir-border);
     border-radius: var(--border-radius);
   }
-  .spritesheet {
+  .code-preview {
     overflow: auto;
     max-height: 100%;
     max-width: 100%;
-    padding: 1rem;
+    padding: 0 1rem;
+    background: #111;
+    color: #ccc;
   }
 
-  .spritesheet pre {
+  .code-preview code {
     overflow: auto;
+    font-size: 10px;
   }
 
   .controls {
     padding: 1rem;
   }
+
+  .embed-svg {
+    display: none;
+  }
 </style>
 
 <div class="container">
-  <div class="spritesheet">
-    <pre><code>{code}</code></pre>
+  <div class="code-preview">
+    {#if code}
+      <pre><code>{code}</code></pre>
+    {/if}
   </div>
   <div class="controls">
     {#if fileLink}
       <a href={fileLink} download="spritesheet.svg">Download</a>
     {/if}
   </div>
+</div>
+
+<div class="embed-svg">
+  {@html code}
 </div>

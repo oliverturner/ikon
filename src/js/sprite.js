@@ -1,9 +1,20 @@
 /**
- * @param {string} id 
- * @param {SVGElement} svg 
+ * @param {string} id
+ * @param {SVGElement} svg
  */
 export function createSymbol(id, svg) {
-  const attrsToOmit = ["xmlns", "id", "width", "height"];
+  const attrsToOmit = [
+    "xml:space",
+    "xmlns",
+    "xmlns:xlink",
+    "version",
+    "id",
+    "x",
+    "y",
+    "width",
+    "height",
+    "style",
+  ];
   const attributes = Object.values(svg.attributes);
   const symbol = document.createElement("symbol");
 
