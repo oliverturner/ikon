@@ -1,20 +1,30 @@
 :root {
-  --surface: #ccc;
   --text: #333;
   --dir-border: #666;
   --border-radius: 5px;
+  --surface: #eee;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font: 14px system-ui, sans-serif;
-  background: rgb(27, 27, 27);
-  background: var(--surface);
-  color: rgb(198, 198, 198);
+  background-color: #ccc;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent 0,
+    transparent 20px,
+    #ddda 0,
+    #ddda 40px
+  );
   color: var(--text);
 }
 
@@ -24,6 +34,20 @@ ul {
   list-style: none;
 }
 
+button {
+  all: unset;
+}
+
+.panel {
+  display: grid;
+
+  overflow: hidden;
+  height: 100%;
+  border: 1px solid var(--dir-border);
+  border-radius: var(--border-radius);
+  background: var(--surface);
+}
+
 .icongrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, 24px);
@@ -31,22 +55,27 @@ ul {
   gap: 1rem;
 
   padding: 1rem;
+}
+
+.icongrid--bordered {
   border: 1px solid var(--dir-border);
   border-radius: var(--border-radius);
 }
 
 .controls {
+  display: flex;
+
   padding: 1rem;
   border-width: 0;
   border-style: solid;
   border-color: var(--dir-border);
 }
 
-.controls.controls--header {
-  border-bottom-width: 1px; 
+.controls--header {
+  border-bottom-width: 1px;
 }
 
-.controls.controls--footer {
+.controls--footer {
   border-top-width: 1px;
 }
 
@@ -64,4 +93,12 @@ ul {
 .iconbtn:hover,
 .iconbtn:focus {
   outline: 1px solid blue;
+}
+
+.controlbtn {
+  padding: 1px 3px;
+  border: 1px solid var(--dir-border);
+  border-radius: 3px;
+  background: #fff;
+  color: var(--text);
 }

@@ -25,6 +25,14 @@ function createIconDict() {
 
         return map;
       }),
+    clear: () =>
+      update((map) => {
+        for (const record of map.values()) {
+          record.selected = false;
+        }
+
+        return map;
+      }),
     reset: () => set(new Map()),
   };
 }

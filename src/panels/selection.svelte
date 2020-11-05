@@ -1,10 +1,13 @@
 <script>
-  import { selectedIcons } from "../js/store";
+  import { iconDict, selectedIcons } from "../js/store";
 
   export let onIconClick;
 </script>
 
 <style>
+  .panel {
+    grid-template-rows: 1fr auto;
+  }
   .icongrid {
     height: 100%;
     overflow-y: auto;
@@ -14,15 +17,28 @@
     max-width: 24px;
     max-height: 24px;
   }
+
+  .controlbtn {
+    margin-left: auto;
+  }
 </style>
 
-<div class="icongrid">
-  {#each $selectedIcons as iconRecord (`selection-${iconRecord.id}`)}
-    <button
-      class="iconbtn"
-      data-key={iconRecord.fullPath}
-      on:click={onIconClick}>
-      <svg class="icon"><use href={`#${iconRecord.id}`} /></svg>
-    </button>
-  {/each}
+<div class="panel">
+  <div class="icongrid">
+    {#each $selectedIcons as iconRecord (`selection-${iconRecord.id}`)}
+      <button
+        class="iconbtn"
+        data-key={iconRecord.fullPath}
+        on:click={onIconClick}>
+        <svg class="icon"><use href={`#${iconRecord.id}`} /></svg>
+      </button>
+    {/each}
+  </div>
+  {#if $selectedIcons.length > 0}
+    <div class="controls controls--footer">
+      <button
+        class="control controlbtn"
+        on:click={() => iconDict.clear()}>Clear</button>
+    </div>
+  {/if}
 </div>

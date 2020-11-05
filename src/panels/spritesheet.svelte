@@ -10,16 +10,9 @@
 </script>
 
 <style>
-  .container {
-    display: grid;
+  .panel {
     grid-template-rows: 1fr auto;
-
-    overflow: hidden;
-    height: 100%;
-    border: 1px solid var(--dir-border);
-    border-radius: var(--border-radius);
   }
-
   .code-preview {
     overflow: auto;
     max-height: 100%;
@@ -50,7 +43,7 @@
   }
 </style>
 
-<div class="container">
+<div class="panel">
   <div class="code-preview">
     {#if code}
       <pre><code>{code}</code></pre>

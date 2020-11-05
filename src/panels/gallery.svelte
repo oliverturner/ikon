@@ -12,19 +12,12 @@
 
 <style>
   .panel {
-    display: grid;
     grid-template-rows: auto 1fr auto;
-
-    overflow: hidden;
-    height: 100%;
-    border: 1px solid var(--dir-border);
-    border-radius: var(--border-radius);
   }
   .gallery {
     height: 100%;
     overflow-y: auto;
     border: none;
-    background: #ccc;
   }
 
   .control {
@@ -34,6 +27,8 @@
   }
 
   .searchbar {
+    flex: 1;
+    
     display: flex;
   }
   .searchfield {

@@ -75,7 +75,7 @@
       {iconRecord.name}:
       {sortedContents.length}
     </button>
-    <div class="dir__contents icongrid">
+    <div class="dir__contents icongrid icongrid--bordered">
       {#each sortedContents as iconRecord (iconRecord)}
         <Record {iconRecord} />
       {/each}
