@@ -4,7 +4,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/99414afd-a15c-4cb6-81d1-0fb1574e71ff/deploy-status)](https://app.netlify.com/sites/heuristic-brown-8c35fc/deploys)
 
-An app for creating icon spritesheets and React components from dragged & dropped directories of SVGs
+An app for creating icon spritesheets from dragged & dropped directories of SVGs
 
 ## Installation
 
