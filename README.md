@@ -6,10 +6,16 @@ An app for creating icon spritesheets and React components from dragged & droppe
 
 ## Installation
 
+```sh
+git clone git@github.com:oliverturner/ikon.git
+npm i
+npm start
+```
+
 ## TODOs
 
 ### MVP
-- [ ] Make UI accessible: switch from `ul` to keyboard-friendly alternative
+- [x] Make UI accessible: switch from `ul` to keyboard-friendly alternative
 - [x] Download constructed spritesheet
 - [x] Hosting
 
@@ -23,6 +29,6 @@ An app for creating icon spritesheets and React components from dragged & droppe
 - [x] Use embedded icons instead of SVGs
 - [ ] Investigate crossfading icons from library to `selection` panel
 - [ ] Prevent drop during processing
-- [ ] Search for icons by name
+- [x] Search for icons by name
 - [x] Allow flattening directories
 - [ ] Create templates to render selected icons as React, Vue, etc components

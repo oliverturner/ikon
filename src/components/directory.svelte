@@ -76,7 +76,7 @@
       {sortedContents.length}
     </button>
     <div class="dir__contents icongrid">
-      {#each sortedContents as iconRecord (`gallery-${iconRecord.id}`)}
+      {#each sortedContents as iconRecord (iconRecord)}
         <Record {iconRecord} />
       {/each}
     </div>

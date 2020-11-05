@@ -21,7 +21,7 @@
   /**
    * @param {DragEvent} event
    */
-  async function onDrop(event) {
+  function onDrop(event) {
     event.preventDefault();
     scannedItems = parseDroppedItems([...event.dataTransfer.items]);
   }

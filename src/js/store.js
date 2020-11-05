@@ -1,4 +1,5 @@
 import { writable, derived } from "svelte/store";
+import fuzzysearch from "fuzzysearch";
 
 import * as utils from "../js/utils";
 
@@ -39,7 +40,16 @@ function getSelectedIcons($iconDict) {
     .sort(utils.sortByRecordKey("fullPath"));
 }
 
+function filterIconList([$iconList, $searchTerm]) {
+  return $searchTerm.length === 0
+    ? $iconList
+    : $iconList.filter((record) => fuzzysearch($searchTerm, record.name));
+}
+
 export const iconTree = writable([]);
 export const iconDict = createIconDict();
+export const searchTerm = writable("");
+
 export const iconList = derived(iconDict, getIconList);
 export const selectedIcons = derived(iconDict, getSelectedIcons);
+export const filteredIconList = derived([iconList, searchTerm], filterIconList);

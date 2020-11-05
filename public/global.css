@@ -36,17 +36,29 @@ ul {
 }
 
 .controls {
-  border-top: 1px solid var(--dir-border);
   padding: 1rem;
+  border-width: 0;
+  border-style: solid;
+  border-color: var(--dir-border);
+}
+
+.controls.controls--header {
+  border-bottom-width: 1px; 
+}
+
+.controls.controls--footer {
+  border-top-width: 1px;
 }
 
 .iconbtn {
   all: unset;
 
   position: relative;
-  width: 24px;
-  height: 24px;
   cursor: pointer;
+}
+
+.iconbtn > svg {
+  max-width: 100%;
 }
 
 .iconbtn:hover,
