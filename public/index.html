@@ -3,15 +3,26 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Web site created using create-snowpack-app" />
+    <meta
+      name="description"
+      content="An app for creating icon spritesheets from dragged & dropped directories of SVGs"
+    />
 
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ffffff" />
+
     <link rel="stylesheet" href="/global.css" />
 
     <title>IKON</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <main class="app">
+      <div class="dropzone">
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+      </div>
+    </main>
+
     <script type="module" src="/_dist_/index.js"></script>
     <!--
       This HTML file is a template.

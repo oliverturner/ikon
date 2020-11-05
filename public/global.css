@@ -2,7 +2,7 @@
   --text: #333;
   --dir-border: #666;
   --border-radius: 5px;
-  --surface: #eee;
+  --surface: #ddd;
 }
 
 * {
@@ -36,6 +36,27 @@ ul {
 
 button {
   all: unset;
+}
+
+.app {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.5rem;
+
+  overflow: hidden;
+  height: 100vh;
+  padding: 0.5rem;
+}
+
+.dropzone {
+  display: grid;
+  place-content: center;
+
+  text-align: center;
+  height: 100px;
+  border-radius: 10px;
+  color: #333;
+  background-color: #999;
 }
 
 .panel {
