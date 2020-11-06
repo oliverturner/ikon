@@ -26,7 +26,7 @@
   }
 </style>
 
-<div class="panel" in:fade out:fade>
+<div class="panel" in:fade={{ delay: 500 }} out:fade>
   <div class="icongrid">
     {#each $selectedIcons as iconRecord (`selection-${iconRecord.id}`)}
       <button

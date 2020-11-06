@@ -2,7 +2,8 @@
   --text: #333;
   --dir-border: #666;
   --border-radius: 5px;
-  --surface: #ddd;
+  --panel-bg: #ddd;
+  --icongrid-bg: #eee;
 }
 
 * {
@@ -66,7 +67,7 @@ button {
   height: 100%;
   border: 1px solid var(--dir-border);
   border-radius: var(--border-radius);
-  background: var(--surface);
+  background: var(--panel-bg);
 }
 
 .icongrid {
@@ -76,11 +77,28 @@ button {
   gap: 1rem;
 
   padding: 1rem;
+  background: var(--icongrid-bg);
 }
 
 .icongrid--bordered {
   border: 1px solid var(--dir-border);
   border-radius: var(--border-radius);
+}
+
+.iconbtn {
+  all: unset;
+
+  position: relative;
+  cursor: pointer;
+}
+
+.iconbtn > svg {
+  max-width: 100%;
+}
+
+.iconbtn:hover,
+.iconbtn:focus {
+  outline: 1px solid blue;
 }
 
 .controls {
@@ -98,22 +116,6 @@ button {
 
 .controls--footer {
   border-top-width: 1px;
-}
-
-.iconbtn {
-  all: unset;
-
-  position: relative;
-  cursor: pointer;
-}
-
-.iconbtn > svg {
-  max-width: 100%;
-}
-
-.iconbtn:hover,
-.iconbtn:focus {
-  outline: 1px solid blue;
 }
 
 .controlbtn {

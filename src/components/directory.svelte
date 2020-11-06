@@ -40,7 +40,7 @@
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     background-color: var(--dir-border);
-    color: var(--surface);
+    color: var(--icongrid-bg);
   }
 
   .dir__label::before,
@@ -61,7 +61,7 @@
     width: 10px;
     height: 10px;
     border-radius: var(--border-radius);
-    background-color: var(--surface);
+    background-color: var(--icongrid-bg);
   }
   .dir__label:hover,
   .dir__label:focus {

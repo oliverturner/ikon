@@ -36,3 +36,5 @@ npm start
 - [ ] Prevent drop during processing
 - [ ] Create templates to render selected icons as React, Vue, etc components
 - [ ] Make selection respect order of input
+- [ ] Make directorie collapsible
+- [ ] Add "info" tips to panels explaining usage

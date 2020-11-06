@@ -30,7 +30,7 @@
 
   .searchbar {
     flex: 1;
-    
+
     display: flex;
   }
   .searchfield {
@@ -39,7 +39,7 @@
   }
 </style>
 
-<div class="panel" in:fade out:fade>
+<div class="panel" in:fade={{ delay: 500 }} out:fade>
   <div class="controls controls--header">
     <div class="control searchbar">
       <label for="searchfield">Search:</label>

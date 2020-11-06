@@ -45,7 +45,7 @@
   }
 </style>
 
-<div class="panel" in:fade out:fade>
+<div class="panel" in:fade={{ delay: 500 }} out:fade>
   <div class="code-preview">
     {#if code}
       <pre><code>{code}</code></pre>
