@@ -1,39 +1,44 @@
 import { writable, derived } from "svelte/store";
 import fuzzysearch from "fuzzysearch";
 
-import * as utils from "../js/utils";
+function togglePath(paths, path) {
+  const index = paths.indexOf(path);
+  index >= 0 ? paths.splice(index, 1) : paths.push(path);
+  return paths;
+}
 
-function createIconDict() {
-  const { subscribe, set, update } = writable(new Map());
+function createSelected() {
+  const { subscribe, set, update } = writable([]);
 
   return {
     subscribe,
-    set,
-    select: (key) =>
-      update((map) => {
-        const iconRecord = map.get(key);
-        iconRecord.selected = !iconRecord.selected;
+    select: ({ fullPath, type }, iconDict) => {
+      update((selectedPaths) => {
+        if (type === "file") {
+          selectedPaths = togglePath(selectedPaths, fullPath);
+        }
 
-        // If a directory, apply `selected` value to all children, regardless of depth
-        if (iconRecord.type === "directory") {
-          // Prefer relevant records to iterating over the entire map
-          const childKeys = [...map.keys()].filter((k) => k.startsWith(key));
-          for (const childKey of childKeys) {
-            map.get(childKey).selected = iconRecord.selected;
+        if (type === "directory") {
+          const addChildren = selectedPaths.indexOf(fullPath) < 0;
+          const childRecords = [...iconDict.keys()]
+            .filter((key) => key.startsWith(fullPath))
+            .map((key) => iconDict.get(key));
+
+          addChildren
+            ? selectedPaths.push(fullPath)
+            : selectedPaths.splice(selectedPaths.indexOf(fullPath), 1);
+
+          for (const record of childRecords) {
+            addChildren
+              ? selectedPaths.push(record.fullPath)
+              : selectedPaths.splice(selectedPaths.indexOf(record.fullPath), 1);
           }
         }
 
-        return map;
-      }),
-    clear: () =>
-      update((map) => {
-        for (const record of map.values()) {
-          record.selected = false;
-        }
-
-        return map;
-      }),
-    reset: () => set(new Map()),
+        return [...new Set(selectedPaths)];
+      });
+    },
+    clear: () => set([]),
   };
 }
 
@@ -41,11 +46,19 @@ function getIconList($iconDict) {
   return [...$iconDict.values()].filter((record) => record.type === "file");
 }
 
-// TODO: Preserve selection order
-function getSelectedIcons($iconDict) {
-  return [...$iconDict.values()]
-    .filter((iconRecord) => iconRecord.type === "file" && iconRecord.selected)
-    .sort(utils.sortByRecordKey("fullPath"));
+/**
+ * @param {[
+ *   $iconDict: Map<string, IconRecord>,
+ *   $pathsSelected: string[]
+ * ]} args
+ *
+ * @returns {IconFile[]}
+ */
+function getSelectedIcons([$iconDict, $pathsSelected]) {
+  console.log({ $pathsSelected });
+  return $pathsSelected
+    .map((path) => $iconDict.get(path))
+    .filter((record) => record.type === "file");
 }
 
 function filterIconList([$iconList, $searchTerm]) {
@@ -55,9 +68,13 @@ function filterIconList([$iconList, $searchTerm]) {
 }
 
 export const iconTree = writable([]);
-export const iconDict = createIconDict();
+export const iconDict = writable(new Map());
+export const pathsSelected = createSelected();
 export const searchTerm = writable("");
 
 export const iconList = derived(iconDict, getIconList);
-export const selectedIcons = derived(iconDict, getSelectedIcons);
+export const selectedIcons = derived(
+  [iconDict, pathsSelected],
+  getSelectedIcons
+);
 export const filteredIconList = derived([iconList, searchTerm], filterIconList);

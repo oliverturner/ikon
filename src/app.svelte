@@ -1,6 +1,6 @@
 <script>
   import { scanDroppedItems } from "./js/data";
-  import { iconTree, iconDict, searchTerm } from "./js/store";
+  import { iconTree, iconDict, searchTerm, pathsSelected } from "./js/store";
   import Dropzone from "./panels/dropzone.svelte";
   import Gallery from "./panels/gallery.svelte";
   import Selection from "./panels/selection.svelte";
@@ -13,7 +13,8 @@
   function parseDroppedItems(items) {
     searchTerm.set("");
     scannedItems = undefined;
-    
+    pathsSelected.clear();
+
     return scanDroppedItems(items).then(({ iconRecords, fileDict }) => {
       iconTree.set(iconRecords);
       iconDict.set(fileDict);
@@ -33,13 +34,13 @@
   function onIconClick(event) {
     const item = event.target.closest("[data-key]");
     if (item) {
-      iconDict.select(item.dataset.key);
+      pathsSelected.select($iconDict.get(item.dataset.key), $iconDict);
     }
   }
 </script>
 
 <main class="app">
-  <Dropzone {handleDroppedItems} label="Drop folders and SVGs here" />
+  <Dropzone {handleDroppedItems} />
 
   {#if scannedItems}
     {#await scannedItems}

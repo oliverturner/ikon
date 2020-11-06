@@ -1,5 +1,5 @@
 <script>
-  import { fade, scale } from "svelte/transition";
+  import { scale } from "svelte/transition";
   import { flip } from "svelte/animate";
 
   import { iconDict, selectedIcons } from "../js/store";
@@ -26,7 +26,7 @@
   }
 </style>
 
-<div class="panel" in:fade={{ delay: 500 }} out:fade>
+<div class="panel">
   <div class="icongrid">
     {#each $selectedIcons as iconRecord (`selection-${iconRecord.id}`)}
       <button

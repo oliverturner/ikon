@@ -3,10 +3,10 @@
   import { fly } from "svelte/transition";
 
   export let handleDroppedItems;
-  export let label = "";
-
-  let visible = false;
+  
+  let label = "Drop folders and SVGs here";
   let dragCls = "dropzone";
+  let visible = false;
 
   $: letters = label.split("").map((x) => (x === " " ? "&nbsp;" : x));
 

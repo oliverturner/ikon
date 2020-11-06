@@ -1,6 +1,4 @@
 <script>
-  import { fade } from "svelte/transition";
-
   import Record from "../components/record.svelte";
   import Icon from "../components/icon.svelte";
   import { iconTree, filteredIconList, searchTerm } from "../js/store";
@@ -39,7 +37,7 @@
   }
 </style>
 
-<div class="panel" in:fade={{ delay: 500 }} out:fade>
+<div class="panel">
   <div class="controls controls--header">
     <div class="control searchbar">
       <label for="searchfield">Search:</label>
