@@ -1,44 +1,39 @@
 import { writable, derived } from "svelte/store";
 import fuzzysearch from "fuzzysearch";
 
-function togglePath(paths, path) {
-  const index = paths.indexOf(path);
-  index >= 0 ? paths.splice(index, 1) : paths.push(path);
-  return paths;
-}
-
+/**
+ * Create a custom store that allows bulk selection of child icons
+ * Track directories to preserve state
+ */
 function createSelected() {
-  const { subscribe, set, update } = writable([]);
+  const { subscribe, set, update } = writable(new Set());
 
   return {
     subscribe,
     select: ({ fullPath, type }, iconDict) => {
       update((selectedPaths) => {
-        if (type === "file") {
-          selectedPaths = togglePath(selectedPaths, fullPath);
-        }
+        const isSelected = !selectedPaths.has(fullPath);
+
+        isSelected
+          ? selectedPaths.add(fullPath)
+          : selectedPaths.delete(fullPath);
 
         if (type === "directory") {
-          const addChildren = selectedPaths.indexOf(fullPath) < 0;
           const childRecords = [...iconDict.keys()]
             .filter((key) => key.startsWith(fullPath))
             .map((key) => iconDict.get(key));
 
-          addChildren
-            ? selectedPaths.push(fullPath)
-            : selectedPaths.splice(selectedPaths.indexOf(fullPath), 1);
-
           for (const record of childRecords) {
-            addChildren
-              ? selectedPaths.push(record.fullPath)
-              : selectedPaths.splice(selectedPaths.indexOf(record.fullPath), 1);
+            isSelected
+              ? selectedPaths.add(record.fullPath)
+              : selectedPaths.delete(record.fullPath);
           }
         }
 
-        return [...new Set(selectedPaths)];
+        return selectedPaths;
       });
     },
-    clear: () => set([]),
+    clear: () => set(new Set()),
   };
 }
 
@@ -49,14 +44,14 @@ function getIconList($iconDict) {
 /**
  * @param {[
  *   $iconDict: Map<string, IconRecord>,
- *   $pathsSelected: string[]
+ *   $pathsSelected: Set<string>
  * ]} args
  *
  * @returns {IconFile[]}
  */
 function getSelectedIcons([$iconDict, $pathsSelected]) {
-  console.log({ $pathsSelected });
-  return $pathsSelected
+  
+  return [...$pathsSelected]
     .map((path) => $iconDict.get(path))
     .filter((record) => record.type === "file");
 }
