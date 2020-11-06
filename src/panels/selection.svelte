@@ -1,4 +1,7 @@
 <script>
+  import { fade, scale } from "svelte/transition";
+  import { flip } from "svelte/animate";
+
   import { iconDict, selectedIcons } from "../js/store";
 
   export let onIconClick;
@@ -23,13 +26,16 @@
   }
 </style>
 
-<div class="panel">
+<div class="panel" in:fade out:fade>
   <div class="icongrid">
     {#each $selectedIcons as iconRecord (`selection-${iconRecord.id}`)}
       <button
         class="iconbtn"
         data-key={iconRecord.fullPath}
-        on:click={onIconClick}>
+        on:click={onIconClick}
+        in:scale
+        out:scale
+        animate:flip={{ duration: 250 }}>
         <svg class="icon"><use href={`#${iconRecord.id}`} /></svg>
       </button>
     {/each}

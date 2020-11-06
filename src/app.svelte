@@ -23,9 +23,8 @@
   /**
    * @param {DragEvent} event
    */
-  function onDrop(event) {
-    event.preventDefault();
-    scannedItems = parseDroppedItems([...event.dataTransfer.items]);
+  function handleDroppedItems(droppedItems) {
+    scannedItems = parseDroppedItems(droppedItems);
   }
 
   /**
@@ -40,7 +39,7 @@
 </script>
 
 <main class="app">
-  <Dropzone {onDrop} label="Drop folders and SVGs here" />
+  <Dropzone {handleDroppedItems} label="Drop folders and SVGs here" />
 
   {#if scannedItems}
     {#await scannedItems}

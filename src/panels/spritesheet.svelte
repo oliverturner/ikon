@@ -1,4 +1,6 @@
 <script>
+  import { fade } from "svelte/transition";
+
   import { selectedIcons } from "../js/store";
   import * as sprite from "../js/sprite";
 
@@ -43,7 +45,7 @@
   }
 </style>
 
-<div class="panel">
+<div class="panel" in:fade out:fade>
   <div class="code-preview">
     {#if code}
       <pre><code>{code}</code></pre>

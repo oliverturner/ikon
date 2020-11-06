@@ -6,7 +6,7 @@
     grid-template-areas:
       "a b"
       "a c";
-    gap: 1rem;
+    gap: 0.5rem;
 
     overflow: hidden;
   }
