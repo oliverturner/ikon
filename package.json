@@ -20,6 +20,7 @@
     "@testing-library/jest-dom": "5.11.5",
     "@testing-library/svelte": "^3.0.0",
     "@tsconfig/svelte": "1.0.10",
+    "@types/dragselect": "1.13.1",
     "jest": "26.6.3",
     "snowpack": "2.16.1",
     "svelte-check": "1.1.8",

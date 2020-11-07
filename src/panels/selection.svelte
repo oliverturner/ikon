@@ -31,6 +31,7 @@
     {#each $selectedIcons as iconRecord (iconRecord)}
       <button
         class="iconbtn"
+        type="button"
         data-key={iconRecord.fullPath}
         on:click={onIconClick}
         in:scale
@@ -44,6 +45,7 @@
     <div class="controls controls--footer">
       <button
         class="control controlbtn"
+        type="button"
         on:click={() => pathsSelected.clear()}>Clear</button>
     </div>
   {/if}

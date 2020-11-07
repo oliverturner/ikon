@@ -37,6 +37,15 @@
       pathsSelected.select($iconDict.get(item.dataset.key), $iconDict);
     }
   }
+
+  /**
+   * @param {CustomEvent} event
+   */
+  function onDragSelect(event) {
+    for (const key of event.detail) {
+      pathsSelected.select($iconDict.get(key), $iconDict);
+    }
+  }
 </script>
 
 <main class="app">
@@ -48,7 +57,7 @@
     {:then}
       <Content>
         <div slot="gallery">
-          <Gallery {onIconClick} />
+          <Gallery {onDragSelect} />
         </div>
         <div slot="selection">
           <Selection {onIconClick} />

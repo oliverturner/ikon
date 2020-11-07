@@ -32,4 +32,5 @@
   <slot name="gallery" />
   <slot name="selection" />
   <slot name="spritesheet" />
+  <slot />
 </div>

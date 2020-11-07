@@ -2,6 +2,6 @@
   export let iconRecord;
 </script>
 
-<button class="iconbtn" data-key={iconRecord.fullPath}>
+<button class="iconbtn" type="button" data-key={iconRecord.fullPath}>
   {@html iconRecord.contents}
 </button>

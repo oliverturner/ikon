@@ -3,8 +3,8 @@
   import { iconTree, filteredIconList, searchTerm } from "../js/store";
   import Record from "../components/record.svelte";
   import Icon from "../components/icon.svelte";
-  
-  export let onIconClick;
+
+  export let onDragSelect;
 
   let preserveDirs = true;
 
@@ -49,17 +49,20 @@
         bind:value={$searchTerm} />
     </div>
   </div>
-  <div class="gallery icongrid" on:click={onIconClick} use:draggable>
-    {#if preserveDirs && togglableDirs}
+
+  {#if preserveDirs && togglableDirs}
+    <div class="gallery icongrid" use:draggable on:dragselect={onDragSelect}>
       {#each $iconTree as iconRecord (iconRecord)}
         <Record {iconRecord} />
       {/each}
-    {:else}
+    </div>
+  {:else}
+    <div class="gallery icongrid" use:draggable on:dragselect={onDragSelect}>
       {#each $filteredIconList as iconRecord (iconRecord)}
         <Icon {iconRecord} />
       {/each}
-    {/if}
-  </div>
+    </div>
+  {/if}
 
   <div class="controls controls--footer">
     {#if togglableDirs}

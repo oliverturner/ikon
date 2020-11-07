@@ -108,7 +108,7 @@ button:not(:disabled) {
 .controls {
   display: flex;
 
-  padding: 1rem;
+  padding: 0.5rem;
   border-width: 0;
   border-style: solid;
   border-color: var(--dir-border);
