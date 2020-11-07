@@ -1,8 +1,9 @@
 <script>
+  import { draggable } from "../actions/draggable";
+  import { iconTree, filteredIconList, searchTerm } from "../js/store";
   import Record from "../components/record.svelte";
   import Icon from "../components/icon.svelte";
-  import { iconTree, filteredIconList, searchTerm } from "../js/store";
-
+  
   export let onIconClick;
 
   let preserveDirs = true;
@@ -48,7 +49,7 @@
         bind:value={$searchTerm} />
     </div>
   </div>
-  <div class="gallery icongrid" on:click={onIconClick}>
+  <div class="gallery icongrid" on:click={onIconClick} use:draggable>
     {#if preserveDirs && togglableDirs}
       {#each $iconTree as iconRecord (iconRecord)}
         <Record {iconRecord} />
