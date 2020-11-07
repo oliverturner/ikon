@@ -21,6 +21,7 @@
   export let iconRecord;
 
   $: sortedContents = sortContents(iconRecord?.contents);
+  $: btnDisabled = sortedContents.length > 100;
 </script>
 
 <style>
@@ -33,7 +34,6 @@
   }
 
   .dir__label {
-    all: unset;
     position: relative;
     display: inline-block;
     padding: 0.125rem 0.3rem;
@@ -63,15 +63,22 @@
     border-radius: var(--border-radius);
     background-color: var(--icongrid-bg);
   }
-  .dir__label:hover,
-  .dir__label:focus {
+  .dir__label:not(:disabled):hover,
+  .dir__label:not(:disabled):focus {
     color: yellow;
+  }
+
+  .dir__label:disabled {
+    background: #666;
   }
 </style>
 
 {#if iconRecord.contents.length > 0}
   <div class="dir">
-    <button class="dir__label" data-key={iconRecord.fullPath}>
+    <button
+      class="dir__label"
+      data-key={iconRecord.fullPath}
+      disabled={btnDisabled}>
       {iconRecord.name}:
       {sortedContents.length}
     </button>

@@ -2,7 +2,7 @@
   import { scale } from "svelte/transition";
   import { flip } from "svelte/animate";
 
-  import { iconDict, selectedIcons } from "../js/store";
+  import { pathsSelected, selectedIcons } from "../js/store";
 
   export let onIconClick;
 </script>
@@ -28,7 +28,7 @@
 
 <div class="panel">
   <div class="icongrid">
-    {#each $selectedIcons as iconRecord (`selection-${iconRecord.id}`)}
+    {#each $selectedIcons as iconRecord (iconRecord)}
       <button
         class="iconbtn"
         data-key={iconRecord.fullPath}
@@ -44,7 +44,7 @@
     <div class="controls controls--footer">
       <button
         class="control controlbtn"
-        on:click={() => iconDict.clear()}>Clear</button>
+        on:click={() => pathsSelected.clear()}>Clear</button>
     </div>
   {/if}
 </div>

@@ -39,6 +39,10 @@ button {
   all: unset;
 }
 
+button:not(:disabled) {
+  cursor: pointer;
+}
+
 .app {
   display: grid;
   grid-template-rows: auto 1fr;
