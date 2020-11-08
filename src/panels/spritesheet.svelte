@@ -4,7 +4,7 @@
 
   let preserveAttrs = true;
 
-  $: icons = $selectedIcons.map(sprite.processSVG(preserveAttrs)).join("");
+  $: icons = $selectedIcons.map(sprite.processSVG(preserveAttrs)).join("\n  ");
   $: code = sprite.extractCode(icons);
   $: fileLink = sprite.createResource(code);
 </script>
@@ -63,8 +63,4 @@
       {@html '&nbsp;'}
     {/if}
   </div>
-</div>
-
-<div class="embed-svg">
-  {@html code}
 </div>

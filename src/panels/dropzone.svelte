@@ -3,7 +3,7 @@
   import { fly } from "svelte/transition";
 
   export let handleDroppedItems;
-  
+
   let label = "Drop folders and SVGs here";
   let dragCls = "dropzone";
   let visible = false;
@@ -45,6 +45,7 @@
 
     transition: background-color 0.25s;
 
+    position: relative;
     text-align: center;
     height: 100px;
     border-radius: 10px;
@@ -52,8 +53,18 @@
     background-color: #999;
   }
 
+  .dropzone::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
   .dropzone.dropzone--hovered {
-    background-color: #888;
+    background-color: #666;
   }
 
   .letters span {

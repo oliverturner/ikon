@@ -3,8 +3,28 @@
   import { flip } from "svelte/animate";
 
   import { pathsSelected, selectedIcons } from "../js/store";
+  import App from "../app.svelte";
+  import Content from "../components/content.svelte";
+  import Directory from "../components/directory.svelte";
+  import Dropzone from "./dropzone.svelte";
 
   export let onIconClick;
+
+  let diff = 0;
+  let currentNum = 0;
+  let optimise = false;
+
+  const btnProps = {
+    class: "iconbtn",
+    type: "button",
+  };
+
+  // Check whether animations should be disbled
+  $: (() => {
+    diff = $selectedIcons ? $selectedIcons.length - currentNum : 0;
+    currentNum = $selectedIcons ? $selectedIcons.length : 0;
+    optimise = diff > 30 || $selectedIcons.length > 30;
+  })();
 </script>
 
 <style>
@@ -16,11 +36,6 @@
     overflow-y: auto;
   }
 
-  .icon {
-    max-width: 24px;
-    max-height: 24px;
-  }
-
   .controlbtn {
     margin-left: auto;
   }
@@ -28,18 +43,25 @@
 
 <div class="panel">
   <div class="icongrid">
-    {#each $selectedIcons as iconRecord (iconRecord)}
-      <button
-        class="iconbtn"
-        type="button"
-        data-key={iconRecord.fullPath}
-        on:click={onIconClick}
-        in:scale
-        out:scale
-        animate:flip={{ duration: 250 }}>
-        <svg class="icon"><use href={`#${iconRecord.id}`} /></svg>
-      </button>
-    {/each}
+    {#if optimise}
+      {#each $selectedIcons as iconRecord (iconRecord)}
+        <button {...btnProps} data-key={iconRecord.fullPath} on:click={onIconClick}>
+          {@html iconRecord.contents}
+        </button>
+      {/each}
+    {:else}
+      {#each $selectedIcons as iconRecord (iconRecord)}
+        <button
+          {...btnProps} 
+          data-key={iconRecord.fullPath}
+          on:click={onIconClick}
+          in:scale
+          out:scale
+          animate:flip={{ duration: 250 }}>
+          {@html iconRecord.contents}
+        </button>
+      {/each}
+    {/if}
   </div>
   {#if $selectedIcons.length > 0}
     <div class="controls controls--footer">

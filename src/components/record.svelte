@@ -2,8 +2,10 @@
   import Directory from "./directory.svelte";
   import Icon from "./icon.svelte";
 
-  /** @type IconRecord */
+  /** @type {IconRecord} */
   export let iconRecord = {};
+
+  if (selected) console.log({ selected, fullPath: iconRecord?.fullPath });
 </script>
 
 {#if iconRecord.type === 'directory'}

@@ -1,11 +1,11 @@
-import prettier from "prettier/standalone";
-import parserHTML from "prettier/parser-html";
+// import prettier from "prettier/standalone";
+// import parserHTML from "prettier/parser-html";
 
 const node = document.createElement("div");
-const prettierConfig = {
-  parser: "html",
-  plugins: [parserHTML],
-};
+// const prettierConfig = {
+//   parser: "html",
+//   plugins: [parserHTML],
+// };
 
 /**
  * @param {string} id
@@ -69,8 +69,11 @@ export function processSVG(preserveAttrs) {
 }
 
 export function extractCode(icons) {
+  // return icons.length > 0
+  //   ? prettier.format(`<svg class="spritesheet">${icons}</svg>`, prettierConfig)
+  //   : undefined;
   return icons.length > 0
-    ? prettier.format(`<svg class="spritesheet">${icons}</svg>`, prettierConfig)
+    ? `<svg class="spritesheet">\n  ${icons}\n</svg>`
     : undefined;
 }
 
