@@ -8,8 +8,6 @@ const app = new App({
 
 export default app;
 
-// Hot Module Replacement (HMR) - Remove this snippet to remove HMR.
-// Learn more: https://www.snowpack.dev/#hot-module-replacement
 if (import.meta.hot) {
   import.meta.hot.accept();
   import.meta.hot.dispose(() => {
@@ -17,10 +15,9 @@ if (import.meta.hot) {
   });
 }
 
-// Load service worker
-if ('serviceWorker' in navigator) {
+if (import.meta.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
   // Use the window load event to keep the page load performant
-  window.addEventListener('load', () => {
-    // navigator.serviceWorker.register('/sw.js');
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js");
   });
 }

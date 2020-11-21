@@ -3,10 +3,6 @@
   import { flip } from "svelte/animate";
 
   import { pathsSelected, selectedIcons } from "../js/store";
-  import App from "../app.svelte";
-  import Content from "../components/content.svelte";
-  import Directory from "../components/directory.svelte";
-  import Dropzone from "./dropzone.svelte";
 
   export let onIconClick;
 

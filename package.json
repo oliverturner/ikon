@@ -18,6 +18,7 @@
     "filesystem"
   ],
   "main": "src",
+  "types": "typings",
   "dependencies": {
     "dragselect": "1.15.1",
     "fuzzysearch": "1.0.3",

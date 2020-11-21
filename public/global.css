@@ -43,6 +43,10 @@ button:not(:disabled) {
   cursor: pointer;
 }
 
+noscript {
+  margin: auto;
+}
+
 .app {
   display: grid;
   grid-template-rows: auto 1fr;

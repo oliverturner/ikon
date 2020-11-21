@@ -37,10 +37,6 @@
     align-items: center;
     gap: 0.25rem;
   }
-
-  .embed-svg {
-    display: none;
-  }
 </style>
 
 <div class="panel">
