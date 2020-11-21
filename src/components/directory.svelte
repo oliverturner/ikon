@@ -73,7 +73,7 @@
 </style>
 
 {#if iconRecord.contents.length > 0}
-  <div class="dir" class:selected>
+  <div class="dir">
     <button class="dir__label" data-key={iconRecord.fullPath}>
       {iconRecord.name}:
       {sortedContents.length}

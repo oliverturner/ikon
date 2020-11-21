@@ -4,8 +4,6 @@
 
   /** @type {IconRecord} */
   export let iconRecord = {};
-
-  if (selected) console.log({ selected, fullPath: iconRecord?.fullPath });
 </script>
 
 {#if iconRecord.type === 'directory'}
