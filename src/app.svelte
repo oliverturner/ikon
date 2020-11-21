@@ -1,6 +1,6 @@
 <script>
   import { scanDroppedItems } from "./js/data";
-  import { iconTree, iconDict, searchTerm, pathsSelected } from "./js/store";
+  import { iconDict, iconTree, pathsSelected, resetStores } from "./js/store";
   import Dropzone from "./panels/dropzone.svelte";
   import Gallery from "./panels/gallery.svelte";
   import Selection from "./panels/selection.svelte";
@@ -10,25 +10,29 @@
 
   let scannedItems;
 
-  function parseDroppedItems(items) {
-    searchTerm.set("");
-    scannedItems = undefined;
-    pathsSelected.clear();
-
-    return scanDroppedItems(items).then(({ iconRecords, fileDict }) => {
-      iconTree.set(iconRecords);
-      iconDict.set(fileDict);
-    });
+  /**
+   * Return a promise while parsing FileEntry items that, when resolved, will 
+   * display the main view
+   * 
+   * @param {DataTransferItemList} items
+   */
+  async function parseDroppedItems(items) {
+    const { iconRecords, fileDict } = await scanDroppedItems(items);
+    iconTree.set(iconRecords);
+    iconDict.set(fileDict);
+    return true;
   }
 
   /**
    * @param {DragEvent} event
    */
   function handleDroppedItems(droppedItems) {
+    resetStores();
     scannedItems = parseDroppedItems(droppedItems);
   }
 
   /**
+   * Remove selected items from Selection
    * @param {MouseEvent} event
    */
   function onIconClick(event) {
@@ -39,6 +43,7 @@
   }
 
   /**
+   * Add / Remove items selected from Gallery
    * @param {CustomEvent} event
    */
   function onDragSelect(event) {

@@ -21,7 +21,6 @@
   export let iconRecord;
 
   $: sortedContents = sortContents(iconRecord?.contents);
-  $: btnDisabled = sortedContents.length > 100;
 </script>
 
 <style>
@@ -74,11 +73,8 @@
 </style>
 
 {#if iconRecord.contents.length > 0}
-  <div class="dir">
-    <button
-      class="dir__label"
-      data-key={iconRecord.fullPath}
-      disabled={btnDisabled}>
+  <div class="dir" class:selected>
+    <button class="dir__label" data-key={iconRecord.fullPath}>
       {iconRecord.name}:
       {sortedContents.length}
     </button>

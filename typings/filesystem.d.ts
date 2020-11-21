@@ -2,7 +2,6 @@
 // FileSystemEntry: https://developer.mozilla.org/en-US/docs/Web/API/FileSystemEntry
 // FileSystemFileEntry: https://developer.mozilla.org/en-US/docs/Web/API/FileSystemFileEntry
 // FileSystemDirectoryEntry: https://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryEntry
-declare namespace ikon {}
 
 type FileSystem = {
   // A USVString representing the file system's name. This name is unique among the entire list of exposed file systems.
@@ -48,7 +47,10 @@ type FileSystemEntry = {
 };
 
 type FileSystemFileEntry = FileSystemEntry & {
-  file: (successCallback: (value: Blob) => void, errorCallback?: (reason?: any) => void) => File;
+  file: (
+    successCallback: (value: Blob) => void,
+    errorCallback?: (reason?: any) => void
+  ) => File;
 };
 
 type FileSystemDirectoryEntry = FileSystemEntry & {
@@ -61,20 +63,3 @@ type FileSystemDirectoryReader = {
     errorCallback?: (reason?: any) => void
   ) => Promise<FileSystemEntry[]>;
 };
-
-type IconDir = {
-  type: "directory";
-  name: string;
-  fullPath: string;
-  contents: IconRecord[];
-};
-
-type IconFile = {
-  type: "file";
-  id: string;
-  name: string;
-  fullPath: string;
-  contents: string;
-};
-
-type IconRecord = IconDir | IconFile;

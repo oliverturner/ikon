@@ -63,7 +63,7 @@ export async function scanEntries(entry, scannedEntries, fileDict) {
 
 /**
  * @param {DataTransferItemList} items
- * @returns {Promise<IconRecord[]>}
+ * @returns {Promise<{iconRecords: IconTree, fileDict: IconDict}>}
  */
 export async function scanDroppedItems(items) {
   // Async operations occur outside the scope of the event handler, so creating a new local record
