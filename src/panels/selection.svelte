@@ -6,21 +6,14 @@
 
   export let onIconClick;
 
-  let diff = 0;
-  let currentNum = 0;
-  let optimise = false;
-
   const btnProps = {
     class: "iconbtn",
     type: "button",
   };
 
-  // Check whether animations should be disbled
-  $: (() => {
-    diff = $selectedIcons ? $selectedIcons.length - currentNum : 0;
-    currentNum = $selectedIcons ? $selectedIcons.length : 0;
-    optimise = diff > 30 || $selectedIcons.length > 30;
-  })();
+  $: diff = $selectedIcons.length - currentNum;
+  $: currentNum = $selectedIcons.length;
+  $: optimise = diff > 30 || $selectedIcons.length > 30;
 </script>
 
 <style>
