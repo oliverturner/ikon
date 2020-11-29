@@ -33,13 +33,13 @@
 <div class="panel">
   <div class="icongrid">
     {#if optimise}
-      {#each $selectedIcons as iconRecord (iconRecord)}
+      {#each $selectedIcons as iconRecord (iconRecord.fullPath)}
         <button {...btnProps} data-key={iconRecord.fullPath} on:click={onIconClick}>
           {@html iconRecord.contents}
         </button>
       {/each}
     {:else}
-      {#each $selectedIcons as iconRecord (iconRecord)}
+      {#each $selectedIcons as iconRecord (iconRecord.fullPath)}
         <button
           {...btnProps} 
           data-key={iconRecord.fullPath}

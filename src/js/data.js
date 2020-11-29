@@ -66,8 +66,8 @@ export async function scanEntries(entry, scannedEntries, fileDict) {
  * @returns {Promise<{iconRecords: IconTree, fileDict: IconDict}>}
  */
 export async function scanDroppedItems(items) {
-  // Async operations occur outside the scope of the event handler, so creating a new local record
-  // of the dataTransfer items is required...
+  // Async operations occur outside the scope of the drag event handler, so 
+  // creating a new local record of the dataTransfer items is required...
   /** @type {FileSystemEntry[]} */
   const entries = items.map((item) => item.webkitGetAsEntry());
 

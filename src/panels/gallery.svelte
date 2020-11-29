@@ -52,13 +52,13 @@
 
   {#if preserveDirs && togglableDirs}
     <div class="gallery icongrid" use:draggable on:dragselect={onDragSelect}>
-      {#each $iconTree as iconRecord (iconRecord)}
+      {#each $iconTree as iconRecord (iconRecord.fullPath)}
         <Record {iconRecord} />
       {/each}
     </div>
   {:else}
     <div class="gallery icongrid" use:draggable on:dragselect={onDragSelect}>
-      {#each $filteredIconList as iconRecord (iconRecord)}
+      {#each $filteredIconList as iconRecord (iconRecord.fullPath)}
         <Icon {iconRecord} />
       {/each}
     </div>

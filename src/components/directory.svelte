@@ -79,7 +79,7 @@
       {sortedContents.length}
     </button>
     <div class="dir__contents icongrid icongrid--bordered">
-      {#each sortedContents as iconRecord (iconRecord)}
+      {#each sortedContents as iconRecord (iconRecord.fullPath)}
         <Record {iconRecord} />
       {/each}
     </div>
