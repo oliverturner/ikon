@@ -76,6 +76,7 @@
 
 <div
   class={dragCls}
+  aria-label={label}
   on:dragenter={onDragInOut}
   on:dragleave={onDragInOut}
   on:dragover={onDragOver}

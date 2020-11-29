@@ -1,8 +1,19 @@
 import { render } from "@testing-library/svelte";
 import App from "../app";
 
-test("renders the dropzone", () => {
-  const { getByText } = render(App);
-  const linkElement = getByText(/Drop folders and SVGs here/i);
-  expect(linkElement).toBeInTheDocument();
+describe("App", () => {
+  let getByLabelText;
+
+  beforeEach(() => {
+    getByLabelText = render(App).getByLabelText;
+  });
+
+  describe.each([
+    ["dropzone", /Drop folders and SVGs here/i],
+    ["GH link", /View source on GitHub/i],
+  ])("renders %s", (input, expected) => {
+    test(`renders ${input}`, () => {
+      expect(getByLabelText(expected)).toBeInTheDocument();
+    });
+  });
 });
