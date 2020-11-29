@@ -1,4 +1,6 @@
-const isProd = process.env.node === "production";
+const isProd = process.env.NODE_ENV === "production";
+
+console.log({ isProd });
 
 /** @type {import("./typings/snowpack").SnowpackPluginConfig[]} */
 let plugins = ["@snowpack/plugin-dotenv", "@snowpack/plugin-svelte"];
