@@ -4,7 +4,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/99414afd-a15c-4cb6-81d1-0fb1574e71ff/deploy-status)](https://app.netlify.com/sites/heuristic-brown-8c35fc/deploys)
 
-An app for creating downloadaable spritesheets from dragged & dropped individual SVGSs or icon directories
+An app for creating downloadable spritesheets from dragged & dropped individual SVGSs or icon directories
 
 ### Features...
 
@@ -35,6 +35,4 @@ npm start
 
 - [ ] Prevent drop during processing
 - [ ] Create templates to render selected icons as React, Vue, etc components
-- [x] Make selection respect order of input
-- [x] Make directorie collapsible
 - [ ] Add "info" tips to panels explaining usage
