@@ -28,12 +28,15 @@
   "devDependencies": {
     "@snowpack/app-scripts-svelte": "1.9.2",
     "@snowpack/plugin-dotenv": "2.0.4",
+    "@snowpack/plugin-optimize": "0.2.9",
     "@snowpack/plugin-run-script": "2.2.0",
     "@snowpack/plugin-svelte": "3.3.0",
+    "@snowpack/plugin-webpack": "2.1.1",
     "@testing-library/jest-dom": "5.11.6",
     "@testing-library/svelte": "^3.0.0",
     "@tsconfig/svelte": "1.0.10",
     "@types/dragselect": "1.13.1",
+    "core-js": "3.8.0",
     "jest": "26.6.3",
     "npm-run-all": "4.1.5",
     "snowpack": "2.17.1",
@@ -46,7 +49,7 @@
     "build:checkts": "tsc -b jsconfig.json",
     "build:app": "snowpack build",
     "build:sw": "workbox generateSW workbox-config.js",
-    "build": "NODE_ENV=production run-s build:*",
+    "build": "run-s build:*",
     "start": "snowpack dev",
     "test": "jest"
   }

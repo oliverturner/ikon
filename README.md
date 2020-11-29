@@ -8,12 +8,16 @@ An app for creating downloadable spritesheets from dragged & dropped individual 
 
 ### Features...
 
-- Works wholly in-browser
-- Fully keyboard-navigable UI
 - Workflow-focused: 
     - Select icons in bulk by directory
     - Fuzzily search by name
     - Flatten heavily-nested directories
+    - Installable for offline use
+- Secure:
+    - Works wholly in-browser
+    - Headers verified by [securityheaders.com](https://securityheaders.com/?q=ikon.oliverturner.cloud&followRedirects=on)
+- Accessible
+    - Fully keyboard-navigable UI
 
 ...more features to come!
 
