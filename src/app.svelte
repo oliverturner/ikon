@@ -7,6 +7,7 @@
   import Spritesheet from "./panels/spritesheet.svelte";
   import Content from "./components/content.svelte";
   import Loader from "./components/loader.svelte";
+  import GHCorner from "./components/gh-corner.svelte";
 
   let scannedItems;
 
@@ -76,3 +77,5 @@
     {/await}
   {/if}
 </main>
+
+<GHCorner href="https://github.com/oliverturner/ikon" />
