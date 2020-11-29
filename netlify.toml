@@ -11,7 +11,7 @@
       style-src 'self' 'unsafe-inline';
       object-src 'none'
     '''
-    Feature-Policy = "fullscreen 'self'"
+    Permissions-Policy = "fullscreen=(self)"
     Referrer-Policy = "same-origin"
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "DENY"
