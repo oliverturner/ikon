@@ -19,7 +19,6 @@ let extraPlugins = [
 
 if (isProd) {
   extraPlugins = [
-    // ["@snowpack/plugin-webpack", { htmlMinifierOptions: false }],
     ["@snowpack/plugin-optimize", { preloadModules: true }],
   ];
 }

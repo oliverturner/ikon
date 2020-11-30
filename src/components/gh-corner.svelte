@@ -1,8 +1,10 @@
 <script>
   export let href = "#";
 </script>
+
 <style>
-  .github-corner svg {
+  .github-corner {
+    display: block;
     position: absolute;
     right: 0;
     top: 0;
@@ -41,7 +43,7 @@
 
 <a
   class="github-corner"
-  href={href}
+  {href}
   target="_blank"
   rel="noopener noreferrer"
   aria-label="View source on GitHub">

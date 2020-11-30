@@ -81,11 +81,13 @@
   on:dragleave={onDragInOut}
   on:dragover={onDragOver}
   on:drop={onDrop}>
-  {#if visible && dragCls === 'dropzone'}
+  {#if visible && dragCls === 'dropzone' && false}
     <div class="letters" out:fly={{ y: 25, duration: 150 }}>
       {#each letters as letter, i (i)}
         <span in:fly={{ ...anim, delay: i * 25 }}>{@html letter}</span>
       {/each}
     </div>
+  {:else}
+    {label}
   {/if}
 </div>
