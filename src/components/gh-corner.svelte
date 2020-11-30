@@ -2,7 +2,7 @@
   export let href = "#";
 </script>
 <style>
-  .github-corner svg {
+  .github-corner {
     position: absolute;
     right: 0;
     top: 0;
