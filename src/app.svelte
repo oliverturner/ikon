@@ -8,13 +8,15 @@
   import Content from "./components/content.svelte";
   import Loader from "./components/loader.svelte";
   import GHCorner from "./components/gh-corner.svelte";
+  import SWPrompt from "./components/sw-prompt.svelte";
+  import SWPromptDev from "./components/sw-prompt-dev.svelte";
 
   let scannedItems;
 
   /**
-   * Return a promise while parsing FileEntry items that, when resolved, will 
+   * Return a promise while parsing FileEntry items that, when resolved, will
    * display the main view
-   * 
+   *
    * @param {DataTransferItemList} items
    */
   async function parseDroppedItems(items) {
@@ -79,3 +81,9 @@
 </main>
 
 <GHCorner href="https://github.com/oliverturner/ikon" />
+
+{#if import.meta.env.NODE_ENV === 'production'}
+  <SWPrompt />
+{:else}
+  <SWPromptDev />
+{/if}
