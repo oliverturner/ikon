@@ -8,8 +8,11 @@
   import Content from "./components/content.svelte";
   import Loader from "./components/loader.svelte";
   import GHCorner from "./components/gh-corner.svelte";
-  import SWPrompt from "./components/sw-prompt.svelte";
-  import SWPromptDev from "./components/sw-prompt-dev.svelte";
+
+  let Prompt =
+    import.meta.env.NODE_ENV === "production"
+      ? import("./components/sw-prompt.svelte").then(({ default: C }) => C)
+      : import("./components/sw-prompt-dev.svelte").then(({ default: C }) => C);
 
   let scannedItems;
 
@@ -82,8 +85,6 @@
 
 <GHCorner href="https://github.com/oliverturner/ikon" />
 
-{#if import.meta.env.NODE_ENV === 'production'}
-  <SWPrompt />
-{:else}
-  <SWPromptDev />
-{/if}
+{#await Prompt then Prompt}
+  <Prompt />
+{/await}
