@@ -13,6 +13,7 @@ An app for creating downloadable spritesheets from dragged & dropped individual 
     - Fuzzily search by name
     - Flatten heavily-nested directories
     - Installable for offline use
+    - Auto updating service worker via Workbox
 - Secure:
     - Works wholly in-browser
     - Headers verified by [securityheaders.com](https://securityheaders.com/?q=ikon.oliverturner.cloud&followRedirects=on)
