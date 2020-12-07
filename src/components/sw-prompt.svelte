@@ -4,6 +4,8 @@
 
   import Prompt from "./prompt.svelte";
 
+  console.log("prod prompt");
+
   const wb = new Workbox("/sw.js");
   let showPrompt = false;
 
@@ -23,3 +25,4 @@
 </script>
 
 <Prompt {showPrompt} {onAccept} />
+

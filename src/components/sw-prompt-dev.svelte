@@ -3,6 +3,8 @@
 
   import Prompt from "./prompt.svelte";
 
+  console.log("dev prompt");
+
   let showPrompt = false;
 
   function onAccept() {
