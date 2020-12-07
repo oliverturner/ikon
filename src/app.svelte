@@ -1,10 +1,12 @@
 <script>
   import { scanDroppedItems } from "./js/data";
   import { iconDict, iconTree, pathsSelected, resetStores } from "./js/store";
+  
   import Dropzone from "./panels/dropzone.svelte";
   import Gallery from "./panels/gallery.svelte";
   import Selection from "./panels/selection.svelte";
   import Spritesheet from "./panels/spritesheet.svelte";
+  
   import Content from "./components/content.svelte";
   import Loader from "./components/loader.svelte";
   import GHCorner from "./components/gh-corner.svelte";
@@ -57,6 +59,8 @@
       pathsSelected.select($iconDict.get(key), $iconDict);
     }
   }
+  
+  console.log("force update")
 </script>
 
 <main class="app">
