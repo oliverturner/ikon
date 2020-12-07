@@ -13,6 +13,7 @@
 
   onMount(async () => {
     showPrompt = true;
+    console.log("show prompt!", showPrompt);
   });
 </script>
 

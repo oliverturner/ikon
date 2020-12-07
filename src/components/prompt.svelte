@@ -1,4 +1,6 @@
 <script>
+import { debug } from "svelte/internal";
+
   import { fade, fly } from "svelte/transition";
 
   export let showPrompt = false;
@@ -15,15 +17,20 @@
 <style lang="scss">
   .prompt {
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 0.5rem;
 
     position: absolute;
     bottom: 1rem;
     right: 1rem;
+    left: 1rem;
     padding: 1rem;
     box-shadow: 0 10px 6px -6px #777;
     background: #fff;
+
+    @media (min-width: 768px) {
+      left: initial;
+    }
 
     & p {
       margin: 0;
@@ -32,6 +39,7 @@
     .btn {
       --border-colour: transparent;
 
+      margin-left: 0.5rem;
       padding: 5px;
       border: 1px solid var(--border-colour);
       border-radius: 3px;
