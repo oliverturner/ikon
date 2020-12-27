@@ -52,5 +52,8 @@
     "build": "run-s build:*",
     "start": "snowpack dev",
     "test": "jest"
+  },
+  "volta": {
+    "node": "14.15.3"
   }
 }
