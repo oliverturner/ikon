@@ -1,6 +1,4 @@
 <script>
-import { debug } from "svelte/internal";
-
   import { fade, fly } from "svelte/transition";
 
   export let showPrompt = false;
