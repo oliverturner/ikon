@@ -46,7 +46,7 @@ function deriveIconList($iconDict) {
 }
 
 /**
- * @param {[$iconDict: IconDict, $pathsSelected: $PathsSelected]} args
+ * @param {[$iconDict: IconDict, $pathsSelected: PathsSelected]} args
  * @returns {IconFile[]}
  */
 function deriveSelectedIcons([$iconDict, $pathsSelected]) {

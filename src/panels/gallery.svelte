@@ -11,6 +11,45 @@
   $: togglableDirs = $searchTerm.length === 0;
 </script>
 
+<div class="panel">
+  <div class="controls controls--header">
+    <div class="control searchbar">
+      <label for="searchfield">Search:</label>
+      <input
+        id="searchfield"
+        class="searchfield"
+        type="search"
+        bind:value={$searchTerm}
+      />
+    </div>
+  </div>
+
+  {#if preserveDirs && togglableDirs}
+    <div class="gallery icongrid" use:draggable on:dragselect={onDragSelect}>
+      {#each $iconTree as iconRecord (iconRecord.fullPath)}
+        <Record {iconRecord} />
+      {/each}
+    </div>
+  {:else}
+    <div class="gallery icongrid" use:draggable on:dragselect={onDragSelect}>
+      {#each $filteredIconList as iconRecord (iconRecord.fullPath)}
+        <Icon {iconRecord} />
+      {/each}
+    </div>
+  {/if}
+
+  <div class="controls controls--footer">
+    {#if togglableDirs}
+      <div class="control">
+        <input id="collapse" type="checkbox" bind:checked={preserveDirs} />
+        <label for="collapse">Preserve directories</label>
+      </div>
+    {:else}
+      {@html "&nbsp;"}
+    {/if}
+  </div>
+</div>
+
 <style>
   .panel {
     grid-template-rows: auto 1fr auto;
@@ -37,41 +76,3 @@
     padding: 0.5rem;
   }
 </style>
-
-<div class="panel">
-  <div class="controls controls--header">
-    <div class="control searchbar">
-      <label for="searchfield">Search:</label>
-      <input
-        id="searchfield"
-        class="searchfield"
-        type="search"
-        bind:value={$searchTerm} />
-    </div>
-  </div>
-
-  {#if preserveDirs && togglableDirs}
-    <div class="gallery icongrid" use:draggable on:dragselect={onDragSelect}>
-      {#each $iconTree as iconRecord (iconRecord.fullPath)}
-        <Record {iconRecord} />
-      {/each}
-    </div>
-  {:else}
-    <div class="gallery icongrid" use:draggable on:dragselect={onDragSelect}>
-      {#each $filteredIconList as iconRecord (iconRecord.fullPath)}
-        <Icon {iconRecord} />
-      {/each}
-    </div>
-  {/if}
-
-  <div class="controls controls--footer">
-    {#if togglableDirs}
-      <div class="control">
-        <input id="collapse" type="checkbox" bind:checked={preserveDirs} />
-        <label for="collapse">Preserve directories</label>
-      </div>
-    {:else}
-      {@html '&nbsp;'}
-    {/if}
-  </div>
-</div>

@@ -1,6 +1,4 @@
 <script>
-import { debug } from "svelte/internal";
-
   import { fade, fly } from "svelte/transition";
 
   export let showPrompt = false;
@@ -13,6 +11,18 @@ import { debug } from "svelte/internal";
     showPrompt = false;
   };
 </script>
+
+{#if showPrompt}
+  <div class="prompt" in:fly={{ y: 200 }} out:fade={{ duration: 250 }}>
+    <p>An update is available:</p>
+    <button class="btn btn--accept" type="button" on:click={onAccept}
+      >Update</button
+    >
+    <button class="btn btn--reject" type="button" on:click={onReject}
+      >Dismiss</button
+    >
+  </div>
+{/if}
 
 <style lang="scss">
   .prompt {
@@ -56,17 +66,3 @@ import { debug } from "svelte/internal";
     }
   }
 </style>
-
-{#if showPrompt}
-  <div class="prompt" in:fly={{ y: 200 }} out:fade={{ duration: 250 }}>
-    <p>An update is available:</p>
-    <button
-      class="btn btn--accept"
-      type="button"
-      on:click={onAccept}>Update</button>
-    <button
-      class="btn btn--reject"
-      type="button"
-      on:click={onReject}>Dismiss</button>
-  </div>
-{/if}

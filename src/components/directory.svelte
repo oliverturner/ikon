@@ -23,6 +23,20 @@
   $: sortedContents = sortContents(iconRecord?.contents);
 </script>
 
+{#if iconRecord.contents.length > 0}
+  <div class="dir">
+    <button class="dir__label" data-key={iconRecord.fullPath}>
+      {iconRecord.name}:
+      {sortedContents.length}
+    </button>
+    <div class="dir__contents icongrid icongrid--bordered">
+      {#each sortedContents as iconRecord (iconRecord.fullPath)}
+        <Record {iconRecord} />
+      {/each}
+    </div>
+  </div>
+{/if}
+
 <style>
   .dir {
     grid-column: 1 / -1;
@@ -71,17 +85,3 @@
     background: #666;
   }
 </style>
-
-{#if iconRecord.contents.length > 0}
-  <div class="dir">
-    <button class="dir__label" data-key={iconRecord.fullPath}>
-      {iconRecord.name}:
-      {sortedContents.length}
-    </button>
-    <div class="dir__contents icongrid icongrid--bordered">
-      {#each sortedContents as iconRecord (iconRecord.fullPath)}
-        <Record {iconRecord} />
-      {/each}
-    </div>
-  </div>
-{/if}

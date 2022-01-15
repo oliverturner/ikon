@@ -2,6 +2,13 @@
   import { fade } from "svelte/transition";
 </script>
 
+<div class="content" in:fade={{ delay: 500 }} out:fade={{ duration: 250 }}>
+  <slot name="gallery" />
+  <slot name="selection" />
+  <slot name="spritesheet" />
+  <slot />
+</div>
+
 <style>
   .content {
     display: grid;
@@ -27,10 +34,3 @@
     overflow: hidden;
   }
 </style>
-
-<div class="content" in:fade={{ delay: 500 }} out:fade={{ duration: 250 }}>
-  <slot name="gallery" />
-  <slot name="selection" />
-  <slot name="spritesheet" />
-  <slot />
-</div>

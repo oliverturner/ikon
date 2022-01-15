@@ -9,6 +9,29 @@
   $: fileLink = sprite.createResource(code);
 </script>
 
+<div class="panel">
+  <div class="code-preview">
+    {#if code}
+      <pre><code>{code}</code></pre>
+    {/if}
+  </div>
+  <div class="controls">
+    {#if fileLink}
+      <div class="control">
+        <input
+          id="preserve-attrs"
+          type="checkbox"
+          bind:checked={preserveAttrs}
+        />
+        <label for="preserve-attrs">Preserve attributes</label>
+      </div>
+      <a class="control" href={fileLink} download="spritesheet.svg">Download</a>
+    {:else}
+      {@html "&nbsp;"}
+    {/if}
+  </div>
+</div>
+
 <style>
   .panel {
     grid-template-rows: 1fr auto;
@@ -38,25 +61,3 @@
     gap: 0.25rem;
   }
 </style>
-
-<div class="panel">
-  <div class="code-preview">
-    {#if code}
-      <pre><code>{code}</code></pre>
-    {/if}
-  </div>
-  <div class="controls">
-    {#if fileLink}
-      <div class="control">
-        <input
-          id="preserve-attrs"
-          type="checkbox"
-          bind:checked={preserveAttrs} />
-        <label for="preserve-attrs">Preserve attributes</label>
-      </div>
-      <a class="control" href={fileLink} download="spritesheet.svg">Download</a>
-    {:else}
-      {@html '&nbsp;'}
-    {/if}
-  </div>
-</div>

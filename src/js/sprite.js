@@ -26,18 +26,19 @@ export function createSymbol(id, svg, preserveAttrs) {
     "style",
   ];
   const attributes = Object.values(svg.attributes);
+  const ns = "http://www.w3.org/2000/svg";
   const symbol = document.createElement("symbol");
 
   // Set minimum required attrs
-  symbol.setAttribute("id", id);
-  symbol.setAttribute("viewBox", svg.getAttribute("viewBox"));
+  symbol.setAttributeNS(ns, "id", id);
+  symbol.setAttributeNS(ns, "viewBox", svg.getAttribute("viewBox"));
 
   if (preserveAttrs) {
     // Copy across allowed attributes from <svg />
     for (const keyVal of attributes) {
       const { name, value } = keyVal;
       if (attrsToOmit.includes(name) === false) {
-        symbol.setAttribute(name, value);
+        symbol.setAttributeNS(ns, name, value);
       }
     }
   }
