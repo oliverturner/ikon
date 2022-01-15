@@ -40,6 +40,23 @@
   onMount(() => (visible = true));
 </script>
 
+<div
+  class={dragCls}
+  aria-label={label}
+  on:dragenter={onDragInOut}
+  on:dragleave={onDragInOut}
+  on:dragover={onDragOver}
+  on:drop={onDrop}
+>
+  {#if visible && dragCls === "dropzone"}
+    <div class="letters" out:fly={{ y: 25, duration: 150 }}>
+      {#each letters as letter, i (i)}
+        <span in:fly={{ ...anim, delay: i * 25 }}>{@html letter}</span>
+      {/each}
+    </div>
+  {/if}
+</div>
+
 <style>
   .dropzone {
     display: grid;
@@ -73,19 +90,3 @@
     display: inline-block;
   }
 </style>
-
-<div
-  class={dragCls}
-  aria-label={label}
-  on:dragenter={onDragInOut}
-  on:dragleave={onDragInOut}
-  on:dragover={onDragOver}
-  on:drop={onDrop}>
-  {#if visible && dragCls === 'dropzone'}
-    <div class="letters" out:fly={{ y: 25, duration: 150 }}>
-      {#each letters as letter, i (i)}
-        <span in:fly={{ ...anim, delay: i * 25 }}>{@html letter}</span>
-      {/each}
-    </div>
-  {/if}
-</div>

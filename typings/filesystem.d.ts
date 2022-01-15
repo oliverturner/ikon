@@ -3,7 +3,7 @@
 // FileSystemFileEntry: https://developer.mozilla.org/en-US/docs/Web/API/FileSystemFileEntry
 // FileSystemDirectoryEntry: https://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryEntry
 
-type FileSystem = {
+export type FileSystem = {
   // A USVString representing the file system's name. This name is unique among the entire list of exposed file systems.
   name: string;
 
@@ -11,7 +11,7 @@ type FileSystem = {
   root: FileSystemDirectoryEntry;
 };
 
-type FileSystemEntry = {
+export type FileSystemEntry = {
   // A FileSystem object representing the file system in which the entry is located.
   filesystem: FileSystem;
 
@@ -46,18 +46,18 @@ type FileSystemEntry = {
   toURL: () => URL;
 };
 
-type FileSystemFileEntry = FileSystemEntry & {
+export type FileSystemFileEntry = FileSystemEntry & {
   file: (
     successCallback: (value: Blob) => void,
     errorCallback?: (reason?: any) => void
   ) => File;
 };
 
-type FileSystemDirectoryEntry = FileSystemEntry & {
+export type FileSystemDirectoryEntry = FileSystemEntry & {
   createReader: () => FileSystemDirectoryReader;
 };
 
-type FileSystemDirectoryReader = {
+export type FileSystemDirectoryReader = {
   readEntries: (
     successCallback: (value?: FileSystemEntry[]) => void,
     errorCallback?: (reason?: any) => void
