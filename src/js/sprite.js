@@ -74,7 +74,7 @@ export function extractCode(icons) {
   //   ? prettier.format(`<svg class="spritesheet">${icons}</svg>`, prettierConfig)
   //   : undefined;
   return icons.length > 0
-    ? `<svg class="spritesheet">\n  ${icons}\n</svg>`
+    ? `<svg xmlns="http://www.w3.org/2000/svg" class="spritesheet">\n  ${icons}\n</svg>`
     : undefined;
 }
 
