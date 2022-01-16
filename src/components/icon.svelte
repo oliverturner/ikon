@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { IconFile } from "../../typings/types";
+	import type { IconRecord } from "../../typings/types";
 
-	export let iconRecord: IconFile;
+	export let iconRecord: IconRecord;
 </script>
 
 <button

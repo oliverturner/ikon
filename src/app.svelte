@@ -11,17 +11,8 @@
   import Loader from "./components/loader.svelte";
   import GHCorner from "./components/gh-corner.svelte";
 
-  let PromptImport =
-    import.meta.env?.NODE_ENV === "production"
-      ? import("./components/sw-prompt.svelte")
-      : import("./components/sw-prompt-dev.svelte");
-
   let scannedItems: Promise<unknown>;
 
-  /**
-   * Return a promise while parsing FileEntry items that, when resolved, will
-   * display the main view
-   */
   function handleDroppedItems(droppedItems: DataTransferItem[]) {
     resetStores();
     scannedItems = scanDroppedItems(droppedItems).then(
@@ -56,6 +47,7 @@
     }
   }
 
+  // Make scannedItems reactive
   $: scannedItems;
 </script>
 
@@ -82,7 +74,3 @@
 </main>
 
 <GHCorner href="https://github.com/oliverturner/ikon" />
-
-{#await PromptImport then { default: Prompt }}
-  <Prompt />
-{/await}

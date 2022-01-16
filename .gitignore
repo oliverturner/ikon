@@ -1,4 +1,2 @@
 build/
 node_modules/
-public/sw*
-public/workbox-*
