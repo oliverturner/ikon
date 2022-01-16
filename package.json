@@ -61,7 +61,6 @@
   },
   "scripts": {
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "build:check": "npm run check",
     "build:app": "rollup -c",
     "build:sw": "workbox generateSW workbox-config.js",
     "build": "run-s build:*",

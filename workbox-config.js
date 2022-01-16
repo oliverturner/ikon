@@ -1,6 +1,6 @@
 module.exports = {
-  globDirectory: "build/",
+  globDirectory: "public/build/",
   globPatterns: ["**/*.{ico,svg,css,html,js,txt}"],
-  swDest: "build/sw.js",
+  swDest: "public/sw.js",
   navigateFallback: "/index.html"
 };
