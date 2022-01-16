@@ -18,11 +18,4 @@ export type IconTree = IconRecord[];
 
 export type IconDict = Map<string, IconRecord>;
 
-interface PathsSelected {
-  select: (iconRecord: IconRecord, iconDict: IconDict) => void;
-  clear: () => void;
-}
-
-export type $PathsSelected = Set<string>;
-
-export as namespace Ikon;
+// export as namespace Ikon;

@@ -1,28 +1,31 @@
-<script>
-  import { onMount } from "svelte";
-  import { Workbox } from "workbox-window";
+<script lang="ts">
+	import { onMount } from "svelte";
+	import { Workbox } from "workbox-window";
 
-  import Prompt from "./prompt.svelte";
+	import Prompt from "./prompt.svelte";
 
-  console.log("prod prompt");
+	console.log("prod prompt");
 
-  const wb = new Workbox("/sw.js");
-  let showPrompt = false;
+	const wb = new Workbox("/sw.js");
+	let showPrompt = false;
 
-  const onAccept = () => {
-    wb.addEventListener("controlling", () => {
-      window.location.reload();
-    });
+	const onAccept = () => {
+		wb.addEventListener("controlling", () => {
+			window.location.reload();
+		});
 
-    // This will postMessage() to the waiting service worker.
-    wb.messageSkipWaiting();
-  };
+		// This will postMessage() to the waiting service worker.
+		wb.messageSkipWaiting();
+	};
 
-  onMount(async () => {
-    wb.addEventListener("waiting", () => (showPrompt = true));
-    wb.register();
-  });
+	onMount(async () => {
+		try {
+			wb.addEventListener("waiting", () => (showPrompt = true));
+			await wb.register();
+		} catch (error) {
+			console.error(error);
+		}
+	});
 </script>
 
 <Prompt {showPrompt} {onAccept} />
-

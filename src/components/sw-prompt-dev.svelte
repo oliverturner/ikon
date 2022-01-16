@@ -1,20 +1,20 @@
-<script>
-  import { onMount } from "svelte";
+<script lang="ts">
+	import { onMount } from "svelte";
 
-  import Prompt from "./prompt.svelte";
+	import Prompt from "./prompt.svelte";
 
-  console.log("dev prompt");
+	console.log("dev prompt");
 
-  let showPrompt = false;
+	let showPrompt = false;
 
-  function onAccept() {
-    window.location.reload();
-  }
+	function onAccept() {
+		window.location.reload();
+	}
 
-  onMount(async () => {
-    showPrompt = true;
-    console.log("show prompt!", showPrompt);
-  });
+	onMount(() => {
+		showPrompt = true;
+		console.log("show prompt!", showPrompt);
+	});
 </script>
 
 <Prompt {showPrompt} {onAccept} />
