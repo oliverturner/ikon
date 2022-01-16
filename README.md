@@ -8,7 +8,7 @@ An app for creating downloadable spritesheets from dragged & dropped individual 
 
 ### Features...
 
-- Workflow-focused: 
+- Workflow-focused:
     - Select icons in bulk by directory
     - Fuzzily search by name
     - Flatten heavily-nested directories
@@ -38,6 +38,14 @@ npm start
 
 ### UX
 
+- [ ] Handle dropping individual icons
 - [ ] Prevent drop during processing
 - [ ] Create templates to render selected icons as React, Vue, etc components
 - [ ] Add "info" tips to panels explaining usage
+
+### DX
+- [ ] Switch to pure TS
+- [x] Upgrade to dragselect@2
+
+## Accessibility
+- [ ] Replace use of "title" attribute with [ToggleTip](https://inclusive-components.design/tooltips-toggletips/)

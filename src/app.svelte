@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
   import { scanDroppedItems } from "./js/data";
-  import { iconDict, iconTree, pathsSelected, resetStores } from "./js/store";
+  import { iconMap, iconTree, pathsSelected, resetStores } from "./js/store";
 
   import Dropzone from "./panels/dropzone.svelte";
   import Gallery from "./panels/gallery.svelte";
@@ -11,84 +11,66 @@
   import Loader from "./components/loader.svelte";
   import GHCorner from "./components/gh-corner.svelte";
 
-  let PromptImport =
-    import.meta.env.NODE_ENV === "production"
-      ? import("./components/sw-prompt.svelte")
-      : import("./components/sw-prompt-dev.svelte");
+  let scannedItems: Promise<unknown>;
 
-  let scannedItems;
-
-  /**
-   * Return a promise while parsing FileEntry items that, when resolved, will
-   * display the main view
-   *
-   * @param {DataTransferItemList} items
-   */
-  async function parseDroppedItems(items) {
-    const { iconRecords, fileDict } = await scanDroppedItems(items);
-    iconTree.set(iconRecords);
-    iconDict.set(fileDict);
-    return true;
-  }
-
-  /**
-   * @param {DragEvent} event
-   */
-  function handleDroppedItems(droppedItems) {
+  function handleDroppedItems(droppedItems: DataTransferItem[]) {
     resetStores();
-    scannedItems = parseDroppedItems(droppedItems);
+    scannedItems = scanDroppedItems(droppedItems).then(
+      ({ fileDict, iconRecords }) => {
+        iconMap.set(fileDict);
+        iconTree.set(iconRecords);
+      }
+    );
   }
 
   /**
    * Remove selected items from Selection
-   * @param {MouseEvent} event
    */
-  function onIconClick(event) {
-    const item = event.target.closest("[data-key]");
-    if (item) {
-      pathsSelected.select($iconDict.get(item.dataset.key), $iconDict);
+  function onIconClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const item = target?.closest("[data-key]") as HTMLButtonElement | null;
+    const icon = $iconMap.get(item?.dataset.key || "");
+    if (icon) {
+      pathsSelected.select(icon, $iconMap);
     }
   }
 
   /**
    * Add / Remove items selected from Gallery
-   * @param {CustomEvent} event
    */
-  function onDragSelect(event) {
+  function onDragSelect(event: CustomEvent) {
     for (const key of event.detail) {
-      pathsSelected.select($iconDict.get(key), $iconDict);
+      const icon = $iconMap.get(key);
+      if (icon) {
+        pathsSelected.select(icon, $iconMap);
+      }
     }
   }
 
-  console.log("force update");
+  // Make scannedItems reactive
+  $: scannedItems;
 </script>
 
 <main class="app">
   <Dropzone {handleDroppedItems} />
 
-  {#if scannedItems}
-    {#await scannedItems}
-      <Loader />
-    {:then}
-      <Content>
-        <div slot="gallery">
-          <Gallery {onDragSelect} />
-        </div>
-        <div slot="selection">
-          <Selection {onIconClick} />
-        </div>
-        <div slot="spritesheet">
-          <Spritesheet />
-        </div>
-      </Content>
-    {:catch error}
-      <p>oops... something went awry: {error.message}</p>
-    {/await}
-  {/if}
+  {#await scannedItems}
+    <Loader />
+  {:then}
+    <Content>
+      <div slot="gallery">
+        <Gallery {onDragSelect} />
+      </div>
+      <div slot="selection">
+        <Selection {onIconClick} />
+      </div>
+      <div slot="spritesheet">
+        <Spritesheet />
+      </div>
+    </Content>
+  {:catch error}
+    <p>oops... something went awry: {error.message}</p>
+  {/await}
 </main>
 
 <GHCorner href="https://github.com/oliverturner/ikon" />
-
-{#await PromptImport then { default: Prompt }}
-  <Prompt />
-{/await}
