@@ -1,32 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="An app for creating icon spritesheets from dragged & dropped directories of SVGs"
-    />
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="An app for creating icon spritesheets from dragged & dropped directories of SVGs" />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate icon" href="/favicon.ico" />
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000" />
-    <link rel="apple-touch-icon" href="/favicon.ico" />
-    <link rel="manifest" href="/manifest.json" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="alternate icon" href="/favicon.ico" />
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000" />
+		<link rel="apple-touch-icon" href="/favicon.ico" />
+		<link rel="manifest" href="/manifest.json" />
 
-    <link rel="stylesheet" href="/global.css" />
-    <link rel="stylesheet" href="/build/bundle.css" />
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://ikon.oliverturner.cloud" />
+		<meta property="og:title" content=ikon.oliverturner.cloud" />
+		<meta property="og:description" content="An app for creating downloadable SVG spritesheets from dragged & dropped files and directories" />
+		<meta property="og:image" content="https://user-images.githubusercontent.com/21795/98355143-ab96f380-2019-11eb-864d-0db08a5b22d1.png" />
 
-    <title>IKON</title>
-  </head>
-  <body>
-    <main class="app">
-      <div class="dropzone">
-        <noscript>You need to enable JavaScript to run this app.</noscript>
-        Drop folders and SVGs here
-      </div>
-    </main>
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content="https://ikon.oliverturner.cloud" />
+		<meta property="twitter:title" content="ikon.oliverturner.cloud" />
+		<meta property="twitter:description" content="An app for creating downloadable SVG spritesheets from dragged & dropped files and directories" />
+		<meta property="twitter:image" content="https://user-images.githubusercontent.com/21795/98355143-ab96f380-2019-11eb-864d-0db08a5b22d1.png" />
 
-    <script type="module" src="/build/main.js"></script>
-  </body>
+		<link rel="stylesheet" href="/global.css" />
+		<link rel="stylesheet" href="/build/bundle.css" />
+
+		<title>IKON</title>
+	</head>
+	<body>
+		<main class="app">
+			<div class="dropzone">
+				<noscript>You need to enable JavaScript to run this app.</noscript>
+				Drop folders and SVGs here
+			</div>
+		</main>
+
+		<script type="module" src="/build/main.js"></script>
+	</body>
 </html>
